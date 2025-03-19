@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (lecturers.length > 0) { %>
+    <h1>Lecturers List (<%= lecturers.length %>)</h1>
+    <% } else { %>
+    <h1>No lecturers yet...</h1>
+    <% } %> <% if (newLecturerButton.url && newLecturerButton.title) { %>
+    <a href="<%= newLecturerButton.url %>"><%= newLecturerButton.title %></a>
+    <% } %> <% if (lecturers.length > 0) { %>
+    <ul>
+      <% lecturers.forEach(lecturer => { %>
+      <li>
+        <a href="/lecturers/<%= lecturer.id %>"
+          ><%= lecturer.name %> <%= lecturer.surname %></a
+        >
+      </li>
+      <% }) %>
+    </ul>
+    <% } %>
+  </body>
+</html>

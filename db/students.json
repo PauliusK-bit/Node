@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Sukurta",
+    "surname": "Sukurta",
+    "age": "23",
+    "phone": "324432",
+    "email": "paulasdlkjahsd@gmail.com",
+    "group": "TYPE 23",
+    "interests": [
+      "JavaScript",
+      "Node.js"
+    ],
+    "id": "5bee0af8-1462-41da-adc0-11509e9a2c16"
+  },
+  {
+    "name": "Sukurta",
+    "surname": "ertret",
+    "age": "34",
+    "phone": "654654654",
+    "email": "sdfakda@gmail.com",
+    "group": "TYPE 22",
+    "interests": [
+      "JavaScript",
+      "Node.js",
+      "Python",
+      "PHP"
+    ],
+    "id": "5ce35275-a445-4631-a4a0-eab750e7e4c9"
+  },
+  {
+    "name": "asdasd",
+    "surname": "ertret",
+    "age": "12",
+    "phone": "324432",
+    "email": "sdfakda@gmail.com",
+    "group": "TYPE 22",
+    "interests": [
+      "JavaScript",
+      "Node.js",
+      "Python",
+      "PHP"
+    ],
+    "id": "71fbc7d5-1880-4242-88f8-eb46891d328a"
+  }
+]

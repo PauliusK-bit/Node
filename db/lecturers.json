@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Sukurta",
+    "surname": "kajhsdkj",
+    "age": "23",
+    "phone": "32432",
+    "email": "sdfakda@gmail.com",
+    "group": "TYPE 22",
+    "subjects": [
+      "JavaScript",
+      "React",
+      "Python",
+      "PHP"
+    ],
+    "id": "f2ef13d7-5016-4900-881a-75eb8d54126f"
+  },
+  {
+    "name": "Sukurta",
+    "surname": "kajhsdkj",
+    "age": "23",
+    "phone": "32432",
+    "email": "sdfakda@gmail.com",
+    "group": "TYPE 22",
+    "subjects": [
+      "JavaScript",
+      "React",
+      "Python",
+      "PHP"
+    ],
+    "id": "32f2ead9-28dc-4ddf-b2f6-3ac734733392"
+  }
+]
