@@ -61,6 +61,10 @@ router.get("/edit-subject/:id", (req, res, next) => {
                   <label for="name">Name:</label>
                   <input type="text" id="name" name="name" value="${name}" />
               </div>
+
+              <button type="submit">Edit</button>
+  
+              <input type="hidden" name="id" value="${id}" />
                
           </form>
       `);

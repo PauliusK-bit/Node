@@ -2,6 +2,7 @@ const { v4: uuid } = require("uuid");
 
 const path = require("path");
 const fs = require("fs");
+const { getStudents } = require("./students");
 
 function getGroups() {
   const filePath = path.join("db", "groups.json");
@@ -36,10 +37,13 @@ function getGroupById(id) {
 
 function createGroup(body) {
   const id = uuid();
+  const students = getStudents();
+
+  const assignedStudents = students.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   const newGroup = {
     ...body,
-
+    students: assignedStudents,
     id,
   };
 
@@ -60,7 +64,7 @@ function updateGroup(data) {
 
   const groups = getGroups();
 
-  const updatedgroups = groups.map((group) => {
+  const updatedGroup = groups.map((group) => {
     if (group.id === id) {
       const updatedGroup = {
         ...data,
@@ -82,7 +86,7 @@ function updateGroup(data) {
 
 function deleteGroup(id) {
   const groups = getGroups();
-  const updatedgroups = groups.filter((group) => group.id !== id);
+  const updatedGroups = groups.filter((group) => group.id !== id);
 
   const stringifiedData = JSON.stringify(updatedGroups, null, 2);
   const filePath = path.join("db", "groups.json");

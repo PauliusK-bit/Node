@@ -74,9 +74,9 @@ router.get("/edit-lecturer/:id", (req, res, next) => {
                 <input type="email" id="email" name="email" value="${email}" />
             </div>
 
-      
+            <button type="submit">Edit</button>
 
-           
+             <input type="hidden" name="id" value="${id}" />
         </form>
     `);
 });

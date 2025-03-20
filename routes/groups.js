@@ -7,6 +7,8 @@ const {
   deleteGroup,
 } = require("../services/groups");
 
+const { getStudents } = require("../services/students");
+
 const router = express.Router();
 
 router.get("/groups", (req, res, next) => {
@@ -27,8 +29,13 @@ router.get("/groups/:id", (req, res, next) => {
   const { id } = req.params;
 
   const group = getGroupById(id);
+  if (!group) {
+    res.render("group", { group, id });
+  }
 
-  res.render("group", { group, id });
+  const students = Array.isArray(group.students) ? group.students : [];
+
+  res.render("group", { group, id, students });
 });
 
 router.get("/create-group", (req, res, next) => {
@@ -57,6 +64,8 @@ router.get("/edit-group/:id", (req, res, next) => {
                   <label for="name">Name:</label>
                   <input type="text" id="name" name="name" value="${name}" />
               </div>   
+               <button type="submit">Edit</button>
+                <input type="hidden" name="id" value="${id}" />
           </form>
       `);
 });

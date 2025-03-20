@@ -12,12 +12,23 @@
       <input type="hidden" name="groupId" value="<%= id %>" />
     </form>
 
+    <h2>Students in this group:</h2>
+    <% if (students && students.length > 0) { %>
+    <ul>
+      <% students.forEach(student => { %>
+      <li><%= student.name %></li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>No students assigned to this group.</p>
+    <% } %>
+
     <a href="/edit-group/<%= id %>">Edit Group</a>
 
     <h1><%= group.name %></h1>
 
     <a href="/groups">Back to groups</a>
-    <% } else {%>
+    <% } else { %>
     <h1>Group not found</h1>
     <p>
       Group with id <span style="color: red"><%= id %></span> was not found.
