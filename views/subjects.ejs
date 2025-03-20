@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (subjects.length > 0) { %>
+    <h1>Subjects List (<%= subjects.length %>)</h1>
+    <% } else { %>
+    <h1>No subjects yet...</h1>
+    <% } %> <% if (newSubjectButton.url && newSubjectButton.title) { %>
+    <a href="<%= newSubjectButton.url %>"><%= newSubjectButton.title %></a>
+    <% } %> <% if (subjects.length > 0) { %>
+    <ul>
+      <% subjects.forEach(subject => { %>
+      <li>
+        <a href="/subjects/<%= subject.id %>"><%= subject.name %></a>
+        <% if (subject.lecturer) { %> - <strong>Lecturer:</strong> <%=
+        subject.lecturer %> <% } else { %> - <strong>Lecturer:</strong> Not
+        assigned <% } %>
+      </li>
+      <% }) %>
+    </ul>
+    <% } %>
+  </body>
+</html>

@@ -1,32 +1,25 @@
 [
   {
-    "name": "Sukurta",
-    "surname": "kajhsdkj",
+    "name": "Sukurta ",
+    "surname": "asdasd",
     "age": "23",
-    "phone": "32432",
+    "phone": "654654654",
     "email": "sdfakda@gmail.com",
-    "group": "TYPE 22",
+    "id": "7530b6b5-6dd4-446c-9f52-75e6eddc30f1",
     "subjects": [
-      "JavaScript",
-      "React",
-      "Python",
-      "PHP"
-    ],
-    "id": "f2ef13d7-5016-4900-881a-75eb8d54126f"
+      {
+        "name": "React",
+        "id": "50727605-58ed-4732-806a-9a277f0e93fa",
+        "lecturer": "Sukurta "
+      }
+    ]
   },
   {
-    "name": "Sukurta",
-    "surname": "kajhsdkj",
+    "name": "Sukurta ",
+    "surname": "asdasd",
     "age": "23",
-    "phone": "32432",
+    "phone": "654654654",
     "email": "sdfakda@gmail.com",
-    "group": "TYPE 22",
-    "subjects": [
-      "JavaScript",
-      "React",
-      "Python",
-      "PHP"
-    ],
-    "id": "32f2ead9-28dc-4ddf-b2f6-3ac734733392"
+    "id": "2d2a9ecf-d411-423a-98ce-881d0dc7505b"
   }
 ]

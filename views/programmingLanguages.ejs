@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (programmingLanguages.length > 0) { %>
+    <h2>Programming Languages List (<%= programmingLanguages.length %>)</h2>
+    <ul>
+      <% programmingLanguages.forEach(language => { %>
+      <li>
+        <a href="/programmingLanguages/<%= language.id %>">
+          <%= language.name %>
+        </a>
+      </li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <h2>No Programming Languages yet...</h2>
+    <% } %> <% if (newProgrammingLanguageButton.url &&
+    newProgrammingLanguageButton.title) { %>
+    <a href="<%= newProgrammingLanguageButton.url %>">
+      <%= newProgrammingLanguageButton.title %>
+    </a>
+    <% } %>
+  </body>
+</html>

@@ -1,117 +1,14 @@
 const express = require("express");
-
-const { v4: uuid } = require("uuid");
-
-const path = require("path");
-const fs = require("fs");
+const {
+  getStudents,
+  getStudentById,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+} = require("../services/students");
+const { getProgrammingLanguages } = require("../services/programmingLanguages");
 
 const router = express.Router();
-
-function getStudents() {
-  const filePath = path.join("db", "students.json");
-  console.log(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const data = JSON.parse(fileContent);
-
-  return data;
-}
-
-function getStudentById(id) {
-  const filePath = path.join("db", "students.json");
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const students = JSON.parse(fileContent);
-
-  const foundStudent = students.find((student) => student.id === id);
-
-  return foundStudent;
-}
-
-function createStudent(body) {
-  const id = uuid();
-  const interests = [];
-
-  if (body.interests) {
-    if (typeof body.interests === "string") {
-      interests.push(body.interests);
-    } else {
-      interests.push(...body.interests);
-    }
-  }
-
-  const newStudent = {
-    ...body,
-    interests,
-    id,
-  };
-
-  const students = getStudents();
-
-  students.push(newStudent);
-
-  const stringifiedData = JSON.stringify(students, null, 2);
-
-  const filePath = path.join("db", "students.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return newStudent;
-}
-
-function updateStudent(data) {
-  const { id } = data;
-
-  const students = getStudents();
-
-  const updatedStudents = students.map((student) => {
-    if (student.id === id) {
-      const interests = [];
-
-      if (data.interests) {
-        if (typeof data.interests === "string") {
-          interests.push(data.interests);
-        } else {
-          interests.push(...data.interests);
-        }
-      }
-
-      const updatedStudent = {
-        ...data,
-        interests,
-      };
-
-      return updatedStudent;
-    } else {
-      return student;
-    }
-  });
-
-  const stringifiedData = JSON.stringify(updatedStudents, null, 2);
-
-  const filePath = path.join("db", "students.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return data;
-}
-
-function deleteStudent(id) {
-  const students = getStudents();
-  const updatedStudents = students.filter((student) => student.id !== id);
-
-  const stringifiedData = JSON.stringify(updatedStudents, null, 2);
-  const filePath = path.join("db", "students.json");
-  fs.writeFileSync(filePath, stringifiedData);
-}
 
 router.get("/students", (req, res, next) => {
   const students = getStudents();
@@ -136,7 +33,9 @@ router.get("/students/:id", (req, res, next) => {
 });
 
 router.get("/create-student", (req, res, next) => {
-  res.render("create-student");
+  const programmingLanguages = getProgrammingLanguages();
+
+  res.render("create-student", { programmingLanguages, student: {} });
 });
 
 router.post("/student-created", (req, res, next) => {
@@ -150,6 +49,7 @@ router.get("/edit-student/:id", (req, res, next) => {
   const { id } = req.params;
 
   const foundStudent = getStudentById(id);
+  const programmingLanguages = getProgrammingLanguages();
 
   const { name, surname, age, interests, phone, email, group } = foundStudent;
 
@@ -177,37 +77,17 @@ router.get("/edit-student/:id", (req, res, next) => {
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="${email}" />
             </div>
-
-             <fieldset>
-        <legend>Group:</legend>
-
-        <div className="form-control">
-         <input type="radio" name="group" id="group-1" value="TYPE 20"
-         ${group === "TYPE 20" ? "checked" : ""} />
-          <label for="group-1">TYPE 20gr.</label>
-        </div>
-
-        <div className="form-control">
-         <input type="radio" name="group" id="group-1" value="TYPE 22"
-        ${group === "TYPE 22" ? "checked" : ""} />
-        <label for="group-1">TYPE 22gr.</label>
-        </div>
-
-        <div className="form-control">
-        <input type="radio" name="group" id="group-1" value="TYPE 23"
-          ${group === "TYPE 23" ? "checked" : ""} />
-           <label for="group-1">TYPE 23gr.</label>
-        </div>
-
-        <div className="form-control">
-         <input type="radio" name="group" id="group-1" value="TYPE 24"
-        ${group === "TYPE 24" ? "checked" : ""} />
-         <label for="group-1">TYPE 24gr.</label>
-        </div>
-      </fieldset>
-
             <fieldset>
-                <legend>Interests:</legend>
+                <legend>Programming Languages:</legend>
+
+                <div class="form-control">
+                <input type="checkbox"  value=${
+                  programmingLanguages.name
+                } name="interests" ${
+    interests.includes("JavaScript") ? "checked" : ""
+  } />
+                    <label for="interest-1">JavaScript</label>
+                </div
 
                 <div>
                     <input type="checkbox" id="interest-1" value="JavaScript" name="interests" ${

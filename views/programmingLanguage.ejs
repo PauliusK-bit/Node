@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (programmingLanguage) { %>
+    <form action="/delete-programmingLanguage" method="POST">
+      <button type="submit">Delete Programming Language</button>
+      <input
+        type="hidden"
+        name="programmingLanguageId"
+        value="<%= programmingLanguage.id %>"
+      />
+    </form>
+
+    <a href="/edit-programmingLanguage/<%= programmingLanguage.id %>"
+      >Edit Programming Language</a
+    >
+
+    <h1><%= programmingLanguage.name %></h1>
+
+    <a href="/programmingLanguages">Back to Programming Languages</a>
+
+    <h2>Students who chose <%= programmingLanguage.name %>:</h2>
+    <% if (students.length > 0) { %>
+    <ul>
+      <% students.forEach(student => { %>
+      <li>
+        <a href="/students/<%= student.id %>">
+          <%= student.name %> <%= student.surname %>
+        </a>
+      </li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <p>No students have chosen this programming language yet.</p>
+    <% } %> <% } else { %>
+    <h1>Programming Language not found</h1>
+    <a href="/programmingLanguages">Back to Programming Languages</a>
+    <% } %>
+  </body>
+</html>

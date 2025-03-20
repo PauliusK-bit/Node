@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (subject) { %>
+    <form action="/delete-subject" method="POST">
+      <button type="submit">Delete Subject</button>
+      <input type="hidden" name="subjectId" value="<%= id %>" />
+    </form>
+
+    <a href="/edit-subject/<%= id %>">Edit Subject</a>
+
+    <h1>
+      <%= subject.name %> <% if (subject.lecturer) { %> -
+      <strong>Lecturer:</strong> <%= subject.lecturer %> <% } else { %> -
+      <strong>Lecturer:</strong> Not assigned <% } %>
+    </h1>
+
+    <a href="/subjects">Back to subjects</a>
+    <% } else {%>
+    <h1>Subject not found</h1>
+    <p>
+      Subject with id <span style="color: red"><%= id %></span> was not found.
+    </p>
+    <a href="/subjects">Back to subjects</a>
+    <% } %>
+  </body>
+</html>

@@ -8,26 +8,19 @@
   <body>
     <% if (lecturer) { %>
     <form action="/delete-lecturer" method="POST">
-      <button type="submit">Delete Student</button>
+      <button type="submit">Delete Lecturer</button>
       <input type="hidden" name="lecturerId" value="<%= id %>" />
     </form>
 
     <a href="/edit-lecturer/<%= id %>">Edit Lecturer</a>
 
     <h1><%= lecturer.name %> <%= lecturer.surname %></h1>
+    <p>Email: <%= lecturer.email %></p>
+    <!-- <p>Phone number: <% lecturer.phone %></p> -->
 
     <% if (lecturer.age) { %>
     <p>Age: <%= lecturer.age %></p>
     <% } %>
-
-    <div>
-      <h2>Subjects:</h2>
-      <ul>
-        <% lecturer.subjects.forEach(subject => { %>
-        <li><%= subject %></li>
-        <% }) %>
-      </ul>
-    </div>
 
     <a href="/lecturers">Back to lecturers</a>
     <% } else {%>

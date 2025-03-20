@@ -9,9 +9,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const studentRoutes = require("./routes/students");
 const lecturersRoutes = require("./routes/lecturers");
+const subjectsRoutes = require("./routes/subjects");
+const programmingLanguagesRoutes = require("./routes/programmingLanguages");
+const groupRoutes = require("./routes/groups");
 
 app.use(studentRoutes);
 app.use(lecturersRoutes);
+app.use(subjectsRoutes);
+app.use(programmingLanguagesRoutes);
+app.use(groupRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));

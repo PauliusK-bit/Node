@@ -34,70 +34,20 @@
       </div>
 
       <fieldset>
-        <legend>Group:</legend>
-
-        <div className="form-control">
-          <input type="radio" name="group" id="group-1" value="TYPE 20"
-          checked={group === "TYPE 20"} />
-          <label htmlFor="group-1">TYPE 20gr.</label>
-        </div>
-
-        <div className="form-control">
-          <input type="radio" name="group" id="group-2" value="TYPE 22"
-          checked={group === "TYPE 22"} />
-          <label htmlFor="group-2">TYPE 22gr.</label>
-        </div>
-
-        <div className="form-control">
-          <input type="radio" name="group" id="group-3" value="TYPE 23"
-          checked={group === "TYPE 23"} />
-          <label htmlFor="group-3">TYPE 23gr.</label>
-        </div>
-
-        <div className="form-control">
-          <input type="radio" name="group" id="group-4" value="TYPE 24"
-          checked={group === "TYPE 24"} />
-          <label htmlFor="group-4">TYPE 24gr.</label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>Interests of languages:</legend>
-
-        <div className="form-control">
-          <input
-            type="checkbox"
-            name="interests"
-            id="interest-1"
-            value="JavaScript"
+        <legend>Programming Languages:</legend>
+        <% if (programmingLanguages && programmingLanguages.length > 0) { %> <%
+        programmingLanguages.forEach(lang => { %>
+        <div>
+          <input type="checkbox" id="lang-<%= lang.id %>"
+          name="programmingLanguages" value="<%= lang.name %>" <%= student &&
+          student.programmingLanguages &&
+          student.programmingLanguages.includes(lang.name) ? 'checked' : '' %>
           />
-          <label htmlFor="interest-1">JavaScript</label>
+          <label for="lang-<%= lang.id %>"><%= lang.name %></label>
         </div>
-
-        <div className="form-control">
-          <input
-            type="checkbox"
-            name="interests"
-            id="interest-2"
-            value="Node.js"
-          />
-          <label htmlFor="interest-2">Node.js</label>
-        </div>
-
-        <div className="form-control">
-          <input
-            type="checkbox"
-            name="interests"
-            id="interest-3"
-            value="Python"
-          />
-          <label htmlFor="interest-3">Python</label>
-        </div>
-
-        <div className="form-control">
-          <input type="checkbox" name="interests" id="interest-4" value="PHP" />
-          <label htmlFor="interest-4">PHP</label>
-        </div>
+        <% }) %> <% } else { %>
+        <p>No programming languages available.</p>
+        <% } %>
       </fieldset>
 
       <button type="submit">Submit</button>
