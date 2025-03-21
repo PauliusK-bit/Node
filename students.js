@@ -12,12 +12,14 @@ const lecturersRoutes = require("./routes/lecturers");
 const subjectsRoutes = require("./routes/subjects");
 const programmingLanguagesRoutes = require("./routes/programmingLanguages");
 const groupRoutes = require("./routes/groups");
+const assignmentsRoutes = require("./routes/assignments");
 
 app.use(studentRoutes);
 app.use(lecturersRoutes);
 app.use(subjectsRoutes);
 app.use(programmingLanguagesRoutes);
 app.use(groupRoutes);
+app.use(assignmentsRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));

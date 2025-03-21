@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (assignment) { %>
+    <form action="/delete-assignment" method="POST">
+      <button type="submit">Delete Assignment</button>
+      <input type="hidden" name="assignmentId" value="<%= id %>" />
+    </form>
+
+    <a href="/edit-assignment/<%= id %>">Edit Assignment</a>
+
+    <h1><%= assignment.name %></h1>
+    <h2>Date: <%= assignment.date%></h2>
+
+    <a href="/assignments">Back to assignments</a>
+    <% } else { %>
+    <h1>Assigment not found</h1>
+    <p>
+      Assigment with id <span style="color: red"><%= id %></span> was not found.
+    </p>
+    <a href="/assignments">Back to assigments</a>
+    <% } %>
+  </body>
+</html>
