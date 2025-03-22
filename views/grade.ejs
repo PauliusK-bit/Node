@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (grade) { %>
+    <form action="/delete-grade" method="POST">
+      <button type="submit">Delete Grade</button>
+      <input type="hidden" name="gradeId" value="<%= id %>" />
+    </form>
+
+    <a href="/edit-grade/<%= id %>">Change Grade</a>
+
+    <h1><%= grade.grade %></h1>
+
+    <a href="/grades">Back to grades</a>
+    <% } else { %>
+    <h1>Grade not found</h1>
+    <p>
+      Grade with id <span style="color: red"><%= id %></span> was not found.
+    </p>
+    <a href="/grades">Back to groups</a>
+    <% } %>
+  </body>
+</html>

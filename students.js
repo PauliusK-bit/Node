@@ -13,6 +13,7 @@ const subjectsRoutes = require("./routes/subjects");
 const programmingLanguagesRoutes = require("./routes/programmingLanguages");
 const groupRoutes = require("./routes/groups");
 const assignmentsRoutes = require("./routes/assignments");
+const gradesRoutes = require("./routes/grades");
 
 app.use(studentRoutes);
 app.use(lecturersRoutes);
@@ -20,6 +21,7 @@ app.use(subjectsRoutes);
 app.use(programmingLanguagesRoutes);
 app.use(groupRoutes);
 app.use(assignmentsRoutes);
+app.use(gradesRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));

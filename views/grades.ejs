@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <% if (grades.length > 0) { %>
+    <h1>Grades List (<%= grades.length %>)</h1>
+    <% } else { %>
+    <h1>No grades yet...</h1>
+    <% } %> <% if (newGradeButton.url && newGradeButton.title) { %>
+    <a href="<%= newGradeButton.url %>"><%= newGradeButton.title %></a>
+    <% } %> <% if (grades.length > 0) { %>
+    <ul>
+      <% grades.forEach(grade => { %>
+      <li>
+        <a href="/grades/<%= grade.id %>"><%= grade.grade %></a>
+      </li>
+      <% }) %>
+    </ul>
+    <% } %>
+  </body>
+</html>
