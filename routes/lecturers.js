@@ -6,6 +6,7 @@ const {
   updateLecturer,
   deleteLecturer,
 } = require("../services/lecturers");
+const { getGroups } = require("../services/groups");
 
 const router = express.Router();
 
@@ -28,7 +29,16 @@ router.get("/lecturers/:id", (req, res, next) => {
 
   const lecturer = getLecturerById(id);
 
-  res.render("lecturer", { lecturer, id });
+  const groups = getGroups();
+
+  const subjects = Array.isArray(lecturer.subjects) ? lecturer.subjects : [];
+
+  const group =
+    groups.length > 0
+      ? groups[Math.floor(Math.random() * groups.length)]
+      : null;
+
+  res.render("lecturer", { lecturer, id, group, subjects });
 });
 
 router.get("/create-lecturer", (req, res, next) => {

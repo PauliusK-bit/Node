@@ -22,6 +22,25 @@
     <p>Age: <%= lecturer.age %></p>
     <% } %>
 
+    <h2>Lecturer group:</h2>
+
+    <% if (group) { %>
+    <p><%= group.name %></p>
+    <% } else { %>
+    <p>No group assigned.</p>
+    <% } %>
+
+    <h2>Lecturer Subjects:</h2>
+    <% if (subjects && subjects.length > 0) { %>
+    <ul>
+      <% subjects.forEach(subject => { %>
+      <li><%= subject.name %></li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>No subjects assigned to this lecturer.</p>
+    <% } %>
+
     <a href="/lecturers">Back to lecturers</a>
     <% } else {%>
     <h1>Lecturer not found</h1>

@@ -2,6 +2,7 @@ const { v4: uuid } = require("uuid");
 
 const path = require("path");
 const fs = require("fs");
+const { getSubjects } = require("./subjects");
 
 function getLecturers() {
   const filePath = path.join("db", "lecturers.json");
@@ -36,9 +37,13 @@ function getLecturerById(id) {
 
 function createLecturer(body) {
   const id = uuid();
+  const subjects = getSubjects();
+
+  const assignedSubjects = subjects.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   const newLecturer = {
     ...body,
+    subjects: assignedSubjects,
 
     id,
   };

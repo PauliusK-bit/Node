@@ -1,25 +1,26 @@
 [
   {
-    "name": "Sukurta ",
+    "name": "Sukurta",
     "surname": "asdasd",
-    "age": "23",
-    "phone": "654654654",
+    "age": "3",
+    "phone": "32432",
     "email": "sdfakda@gmail.com",
-    "id": "7530b6b5-6dd4-446c-9f52-75e6eddc30f1",
-    "subjects": [
-      {
-        "name": "React",
-        "id": "50727605-58ed-4732-806a-9a277f0e93fa",
-        "lecturer": "Sukurta "
-      }
-    ]
+    "id": "20e77b1c-baeb-4e59-a747-a271b339aedc"
   },
   {
-    "name": "Sukurta ",
-    "surname": "asdasd",
+    "name": "Subjects",
+    "surname": "Subject",
     "age": "23",
     "phone": "654654654",
+    "email": "aslkdjaslk@gmail.com",
+    "id": "907bdb05-ce51-417b-aeea-26c7d0060200"
+  },
+  {
+    "name": "Sukurta",
+    "surname": "Sukurta",
+    "age": "32",
+    "phone": "654654654",
     "email": "sdfakda@gmail.com",
-    "id": "2d2a9ecf-d411-423a-98ce-881d0dc7505b"
+    "id": "047c00da-1647-46ca-aaca-82cdfa64bfaa"
   }
 ]
