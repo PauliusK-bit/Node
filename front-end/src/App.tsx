@@ -1,11 +1,15 @@
-import { BrowserRouter } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import StudentsPage from "./pages/StudentsPage/StudentsPage";
+import LecturersPage from "./pages/LecturersPage/LecturersPage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <StudentsPage />
+        <Routes>
+          <Route path="students" element={<StudentsPage />} />
+          <Route path="lecturers" element={<LecturersPage />} />
+        </Routes>
       </BrowserRouter>
     </>
   );

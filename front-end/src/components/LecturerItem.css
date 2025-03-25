@@ -1,0 +1,9 @@
+.lecturer-card {
+  border: 2px solid purple;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.subjects {
+  padding: 20px;
+}

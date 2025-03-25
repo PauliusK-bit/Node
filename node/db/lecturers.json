@@ -1,26 +1,40 @@
 [
   {
-    "name": "Sukurta",
-    "surname": "asdasd",
-    "age": "3",
-    "phone": "32432",
-    "email": "sdfakda@gmail.com",
-    "id": "20e77b1c-baeb-4e59-a747-a271b339aedc"
+    "name": "dasdsa",
+    "surname": "asdasda",
+    "age": "12",
+    "phone": "asdasd",
+    "email": "asdasdasdasdasd@gmail.com",
+    "subjects": [
+      {
+        "name": "PHP",
+        "id": "b49fca83-b5d1-4760-9575-01580f7894e4"
+      },
+      {
+        "name": "React",
+        "id": "50727605-58ed-4732-806a-9a277f0e93fa",
+        "lecturer": "Sukurta "
+      }
+    ],
+    "id": "27cbd9e2-6385-420c-b1fd-55ec0349ed03"
   },
   {
-    "name": "Subjects",
-    "surname": "Subject",
-    "age": "23",
-    "phone": "654654654",
-    "email": "aslkdjaslk@gmail.com",
-    "id": "907bdb05-ce51-417b-aeea-26c7d0060200"
-  },
-  {
-    "name": "Sukurta",
-    "surname": "Sukurta",
+    "name": "Sukurta Dabar",
+    "surname": "Dabar",
     "age": "32",
-    "phone": "654654654",
-    "email": "sdfakda@gmail.com",
-    "id": "047c00da-1647-46ca-aaca-82cdfa64bfaa"
+    "phone": "1987392",
+    "email": "akjsdhakjsd@gmail.com",
+    "subjects": [
+      {
+        "name": "React",
+        "id": "50727605-58ed-4732-806a-9a277f0e93fa",
+        "lecturer": "Sukurta "
+      },
+      {
+        "name": "PHP",
+        "id": "b49fca83-b5d1-4760-9575-01580f7894e4"
+      }
+    ],
+    "id": "169954fc-18e8-4849-8cf5-e0a656ac3410"
   }
 ]

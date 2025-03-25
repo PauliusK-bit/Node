@@ -44,7 +44,6 @@ function createLecturer(body) {
   const newLecturer = {
     ...body,
     subjects: assignedSubjects,
-
     id,
   };
 

@@ -23,7 +23,7 @@ const Info = styled.p`
 `;
 
 const StudentItem = ({ data }: StudentProps) => {
-  const { name, surname, age, phone, email, group } = data;
+  const { name, surname, age, phone, email, group, interests } = data;
 
   return (
     <>
@@ -35,6 +35,18 @@ const StudentItem = ({ data }: StudentProps) => {
         <Info>Telefonas: {phone}</Info>
         <Info>El. paštas: {email}</Info>
         <Info>Grupė: {group}</Info>
+        <div>
+          Interests:{" "}
+          {interests.length > 0 ? (
+            <ul>
+              {interests.map((interest, index) => (
+                <li key={index}>{interest}</li>
+              ))}
+            </ul>
+          ) : (
+            <div>The student has no interests</div>
+          )}
+        </div>
       </Card>
     </>
   );
