@@ -6,7 +6,10 @@
     "phone": "324432",
     "email": "paulasdlkjahsd@gmail.com",
     "group": "TYPE 23",
-    "interests": ["JavaScript", "Node.js"],
+    "interests": [
+      "JavaScript",
+      "Node.js"
+    ],
     "id": "5bee0af8-1462-41da-adc0-11509e9a2c16"
   },
   {
@@ -25,7 +28,12 @@
     "phone": "324432",
     "email": "sdfakda@gmail.com",
     "group": "TYPE 22",
-    "interests": ["JavaScript", "Node.js", "Python", "PHP"],
+    "interests": [
+      "JavaScript",
+      "Node.js",
+      "Python",
+      "PHP"
+    ],
     "id": "71fbc7d5-1880-4242-88f8-eb46891d328a"
   },
   {
@@ -47,5 +55,18 @@
     "programmingLanguages": "Sukurta dabar pakeista vel pakeista",
     "interests": [],
     "id": "edb1c3f1-5107-4bf3-8350-232431248b5a"
+  },
+  {
+    "name": "Sukurta su postman",
+    "surname": "Sukurta postman",
+    "age": "23",
+    "phone": "324432",
+    "email": "paulasdlkjahsd@gmail.com",
+    "group": "TYPE 23",
+    "interests": [
+      "JavaScript",
+      "Node.js"
+    ],
+    "id": "86330e88-82fa-4fef-a36d-b84e6e16a10c"
   }
 ]
