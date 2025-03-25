@@ -31,3 +31,14 @@ export interface Subject {
   name: string;
   id: string;
 }
+
+export interface Assignment {
+  name: string;
+  date: string;
+  description: string;
+  id: string;
+}
+
+export interface AssignmentProps {
+  data: Assignment;
+}
