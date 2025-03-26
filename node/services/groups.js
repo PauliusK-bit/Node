@@ -2,11 +2,9 @@ const { v4: uuid } = require("uuid");
 
 const path = require("path");
 const fs = require("fs");
-const { getStudents } = require("./students");
 
 function getGroups() {
   const filePath = path.join("db", "groups.json");
-  console.log(filePath);
 
   if (!fs.existsSync(filePath)) {
     throw new Error("File does not exist");
@@ -37,13 +35,10 @@ function getGroupById(id) {
 
 function createGroup(body) {
   const id = uuid();
-  const students = getStudents();
-
-  const assignedStudents = students.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   const newGroup = {
     ...body,
-    students: assignedStudents,
+
     id,
   };
 

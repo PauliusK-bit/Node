@@ -7,8 +7,6 @@ const {
   deleteGroup,
 } = require("../services/groups");
 
-const { getStudents } = require("../services/students");
-
 const router = express.Router();
 
 router.get("/groups", (req, res, next) => {

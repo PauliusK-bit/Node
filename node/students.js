@@ -1,5 +1,7 @@
 const express = require("express");
+require("dotenv").config();
 const path = require("path");
+const process = require("process");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -47,9 +49,9 @@ app.set("views", path.join("views"));
 
 app.use(express.static("public"));
 
-app.get("/", (req, res, next) => {
+app.get("/", (req, res) => {
   res.render("index");
 });
 
-const PORT = 3007;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));

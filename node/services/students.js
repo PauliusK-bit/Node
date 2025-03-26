@@ -2,10 +2,10 @@ const { v4: uuid } = require("uuid");
 
 const path = require("path");
 const fs = require("fs");
+const { embedData } = require("../lib");
 
 function getStudents(query) {
   const filePath = path.join("db", "students.json");
-  console.log(filePath);
 
   if (!fs.existsSync(filePath)) {
     throw new Error("File does not exist");
@@ -23,6 +23,20 @@ function getStudents(query) {
 
     if (limit) {
       formedData = data.slice(start, limit);
+    }
+
+    console.log(query);
+
+    const embed = query._embed;
+
+    if (embed) {
+      if (Array.isArray(embed)) {
+        embed.forEach((item) => {
+          formedData = embedData(formedData, item);
+        });
+      } else {
+        formedData = embedData(formedData, embed);
+      }
     }
   }
 

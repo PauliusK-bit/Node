@@ -2,7 +2,6 @@ const { v4: uuid } = require("uuid");
 
 const path = require("path");
 const fs = require("fs");
-const { getLecturers } = require("./lecturers");
 
 function getSubjects() {
   const filePath = path.join("db", "subjects.json");
@@ -46,29 +45,12 @@ function createSubject(body) {
 
   const subjects = getSubjects();
 
-  const lecturers = getLecturers();
-
-  const assignedLecturer =
-    lecturers[Math.floor(Math.random() * lecturers.length)];
-
-  if (assignedLecturer) {
-    newSubject.lecturer = assignedLecturer.name;
-    if (!assignedLecturer.subjects) {
-      assignedLecturer.subjects = [];
-    }
-    assignedLecturer.subjects.push(newSubject);
-  }
-
   subjects.push(newSubject);
 
   const stringifiedData = JSON.stringify(subjects, null, 2);
 
   const filePath = path.join("db", "subjects.json");
   fs.writeFileSync(filePath, stringifiedData);
-
-  const lecturerStringifiedData = JSON.stringify(lecturers, null, 2);
-  const lecturerFilePath = path.join("db", "lecturers.json");
-  fs.writeFileSync(lecturerFilePath, lecturerStringifiedData);
 
   return newSubject;
 }
@@ -90,7 +72,7 @@ function updateSubject(data) {
     }
   });
 
-  const stringifiedData = JSON.stringify(updatedSubject, null, 2);
+  const stringifiedData = JSON.stringify(updatedSubjects, null, 2);
 
   const filePath = path.join("db", "subjects.json");
   fs.writeFileSync(filePath, stringifiedData);
