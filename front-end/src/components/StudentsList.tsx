@@ -12,11 +12,12 @@ const CardContainer = styled.div`
 
 const StudentsList = () => {
   const [students, setStudents] = useState<Student[]>([]);
+  const [limit, setLimit] = useState(2);
 
   useEffect(() => {
     const fetchStudentsData = async () => {
       try {
-        const { data } = await axios(`${API_URL}/students`);
+        const { data } = await axios(`${API_URL}/students?_limit=${limit}`);
 
         setStudents(data);
       } catch (err) {
@@ -24,14 +25,28 @@ const StudentsList = () => {
       }
     };
     fetchStudentsData();
-  }, []);
+  }, [limit]);
 
   return (
-    <CardContainer>
-      {students.map((student, index) => (
-        <StudentItem key={index} data={student} />
-      ))}
-    </CardContainer>
+    <div>
+      <label>
+        Rodyti studentų:
+        <select
+          value={limit}
+          onChange={(event) => setLimit(Number(event.target.value))}
+        >
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={15}>15</option>
+          <option value={20}>20</option>
+        </select>
+      </label>
+      <CardContainer>
+        {students.map((student, index) => (
+          <StudentItem key={index} data={student} />
+        ))}
+      </CardContainer>
+    </div>
   );
 };
 

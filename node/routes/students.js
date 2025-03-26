@@ -11,7 +11,7 @@ const { getProgrammingLanguages } = require("../services/programmingLanguages");
 const router = express.Router();
 
 router.get("/students", (req, res, next) => {
-  const students = getStudents();
+  const students = getStudents(req.query);
 
   const data = {
     newStudentButton: {
@@ -19,6 +19,7 @@ router.get("/students", (req, res, next) => {
       title: "New Student",
     },
     students,
+    limit: req.query._limit ?? "5",
   };
 
   res.render("students", data);

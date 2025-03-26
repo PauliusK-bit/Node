@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="students-list">
+      <% if (students.length > 0) { %>
+      <h1>Students List (<%= students.length %>)</h1>
+      <% } else { %>
+      <h1>No students yet...</h1>
+      <% } %>
+
+      <form action="/students" method="GET">
+        <div>
+          <label for="_limit">Students Per Page</label>
+          <select name="_limit" id="_limit" value="<%= limit %>">
+            <option value="2" <%= limit == 2 ? "selected" : "" %>>2</option>
+            <option value="5" <%= limit == 5 ? "selected" : "" %>>5</option>
+            <option value="10" <%= limit == 10 ? "selected" : "" %>>10</option>
+          </select>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <% if (students.length > 0) { %>
+      <ul>
+        <% students.forEach(student => { %>
+        <li>
+          <a href="/students/<%= student.id %>"
+            ><%= student.name %> <%= student.surname %></a
+          >
+        </li>
+        <% }) %>
+      </ul>
+      <% } %>
+    </div>
+  </body>
+</html>

@@ -39,7 +39,6 @@ function createGrade(body) {
 
   const newGrade = {
     ...body,
-
     id,
   };
 

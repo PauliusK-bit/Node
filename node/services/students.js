@@ -3,7 +3,7 @@ const { v4: uuid } = require("uuid");
 const path = require("path");
 const fs = require("fs");
 
-function getStudents() {
+function getStudents(query) {
   const filePath = path.join("db", "students.json");
   console.log(filePath);
 
@@ -15,7 +15,18 @@ function getStudents() {
 
   const data = JSON.parse(fileContent);
 
-  return data;
+  let formedData = data;
+
+  if (query) {
+    const limit = query._limit;
+    const start = query._start ? query._start : 0;
+
+    if (limit) {
+      formedData = data.slice(start, limit);
+    }
+  }
+
+  return formedData;
 }
 
 function getStudentById(id) {
