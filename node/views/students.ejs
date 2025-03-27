@@ -6,6 +6,9 @@
     <title>Document</title>
   </head>
   <body>
-    <%- include('partials/students-list.ejs')%>
+    <% if (newStudentButton.url && newStudentButton.title) { %>
+    <a href="<%= newStudentButton.url %>"><%= newStudentButton.title %></a>
+    <% } %> <% if (students.length > 0) { %> <%-
+    include('partials/students-list.ejs') %> <% } %>
   </body>
 </html>

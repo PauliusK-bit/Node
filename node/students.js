@@ -27,6 +27,7 @@ const gradeAPIRoutes = require("./api/grades");
 const lecturerAPIRoutes = require("./api/lecturers");
 const subjectAPIRoutes = require("./api/subjects");
 const programmingLanguageAPIRoutes = require("./api/programmingLanguages");
+const { connectToDB } = require("../db");
 
 app.use(studentRoutes);
 app.use(lecturersRoutes);
@@ -53,5 +54,12 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+const PORT = process.env.PORT || 3007;
+
+connectToDB()
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+  })
+  .catch((error) => {
+    console.error("Failed to connect to MongoDB:", error);
+  });

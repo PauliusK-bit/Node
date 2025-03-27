@@ -5,12 +5,13 @@ const {
   createStudent,
   updateStudent,
   deleteStudent,
-} = require("../services/students");
+} = require("../services/studentsServices");
 const { getProgrammingLanguages } = require("../services/programmingLanguages");
+const { getGroupById } = require("../services/groups");
 
 const router = express.Router();
 
-router.get("/students", (req, res, next) => {
+router.get("/students", (req, res) => {
   const students = getStudents(req.query);
 
   const data = {
@@ -25,28 +26,33 @@ router.get("/students", (req, res, next) => {
   res.render("students", data);
 });
 
-router.get("/students/:id", (req, res, next) => {
+router.get("/students/:id", (req, res) => {
   const { id } = req.params;
 
   const student = getStudentById(id);
 
+  if (student.groupId) {
+    const group = getGroupById(student.groupId);
+    student.group = group;
+  }
+
   res.render("student", { student, id });
 });
 
-router.get("/create-student", (req, res, next) => {
+router.get("/create-student", (req, res) => {
   const programmingLanguages = getProgrammingLanguages();
 
   res.render("create-student", { programmingLanguages, student: {} });
 });
 
-router.post("/student-created", (req, res, next) => {
+router.post("/student-created", (req, res) => {
   const { body } = req;
   const createdStudent = createStudent(body);
 
   res.redirect(`/students/${createdStudent.id}`);
 });
 
-router.get("/edit-student/:id", (req, res, next) => {
+router.get("/edit-student/:id", (req, res) => {
   const { id } = req.params;
 
   const foundStudent = getStudentById(id);
@@ -123,14 +129,14 @@ router.get("/edit-student/:id", (req, res, next) => {
     `);
 });
 
-router.post("/student-edited", (req, res, next) => {
+router.post("/student-edited", (req, res) => {
   const { body } = req;
   const updatedStudent = updateStudent(body);
 
   res.redirect(`/students/${updatedStudent.id}`);
 });
 
-router.post("/delete-student", (req, res, next) => {
+router.post("/delete-student", (req, res) => {
   const { studentId } = req.body;
 
   deleteStudent(studentId);

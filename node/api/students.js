@@ -5,12 +5,17 @@ const {
   createStudent,
   updateStudent,
   deleteStudent,
-} = require("../services/students");
+} = require("../services/studentsServices");
+const { embedData } = require("../lib");
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  const students = getStudents(req.query);
+  let students = getStudents(req.query);
+
+  if (req.query._embed === "group") {
+    students = embedData(students, "group", "groupId");
+  }
   res.send(students);
 });
 

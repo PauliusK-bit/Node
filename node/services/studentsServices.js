@@ -2,7 +2,9 @@ const { v4: uuid } = require("uuid");
 
 const path = require("path");
 const fs = require("fs");
-const { embedData } = require("../lib");
+const { processData } = require("../lib");
+
+const { getGroups } = require("./groups");
 
 function getStudents(query) {
   const filePath = path.join("db", "students.json");
@@ -15,32 +17,7 @@ function getStudents(query) {
 
   const data = JSON.parse(fileContent);
 
-  let formedData = data;
-
-  if (query) {
-    const limit = query._limit;
-    const start = query._start ? query._start : 0;
-
-    if (limit) {
-      formedData = data.slice(start, limit);
-    }
-
-    console.log(query);
-
-    const embed = query._embed;
-
-    if (embed) {
-      if (Array.isArray(embed)) {
-        embed.forEach((item) => {
-          formedData = embedData(formedData, item);
-        });
-      } else {
-        formedData = embedData(formedData, embed);
-      }
-    }
-  }
-
-  return formedData;
+  return processData(data, query);
 }
 
 function getStudentById(id) {
@@ -71,10 +48,20 @@ function createStudent(body) {
     }
   }
 
+  const groups = getGroups();
+
+  const randomGroup =
+    groups.length > 0
+      ? groups[Math.floor(Math.random() * groups.length)]
+      : null;
+
+  const groupId = randomGroup ? randomGroup.id : null;
+
   const newStudent = {
     ...body,
     interests,
     id,
+    groupId,
   };
 
   const students = getStudents();

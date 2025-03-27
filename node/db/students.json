@@ -1,67 +1,24 @@
 [
   {
-    "name": "Sukurta 1",
+    "name": "asdasd",
+    "surname": "asdasd",
+    "age": "43",
+    "phone": "32432",
+    "email": "dfgdf@gmail.com",
+    "programmingLanguages": "Sukurta 3",
+    "interests": [],
+    "id": "5b9db7a7-a698-4d60-890b-5fa3b8a28536",
+    "groupId": "25b0add5-1562-4f15-aaa3-681098f8b476"
+  },
+  {
+    "name": "John",
     "surname": "Sukurta",
-    "age": "23",
-    "phone": "324432",
-    "email": "paulasdlkjahsd@gmail.com",
-    "group": "TYPE 23",
-    "interests": ["JavaScript", "Node.js"],
-    "id": "5bee0af8-1462-41da-adc0-11509e9a2c16",
-    "groupId": "1"
-  },
-  {
-    "name": "Sukurta 2",
-    "surname": "ertret",
-    "age": "34",
-    "phone": "654654654",
-    "email": "sdfakda@gmail.com",
-    "id": "5ce35275-a445-4631-a4a0-eab750e7e4c9",
-    "interests": [],
-    "groupId": "1"
-  },
-  {
-    "name": "asdasd 3",
-    "surname": "ertret",
-    "age": "12",
-    "phone": "324432",
-    "email": "sdfakda@gmail.com",
-    "group": "TYPE 22",
-    "interests": ["JavaScript", "Node.js", "Python", "PHP"],
-    "id": "71fbc7d5-1880-4242-88f8-eb46891d328a",
-    "groupId": "2"
-  },
-  {
-    "name": "Studentas 4 ",
-    "surname": "Sdhajkh",
-    "age": "32432",
-    "phone": "234234",
-    "email": "sdfakda@gmail.com",
-    "programmingLanguages": "Sukurta dabar",
-    "interests": [],
-    "id": "19e78590-3119-4920-8870-450dc8538734",
-    "groupId": "2"
-  },
-  {
-    "name": "Tikrinu 5",
-    "surname": "Tikrinu",
     "age": "32",
-    "phone": "123123",
-    "email": "sdfakda@gmail.com",
-    "programmingLanguages": "Sukurta dabar pakeista vel pakeista",
-    "interests": [],
-    "id": "edb1c3f1-5107-4bf3-8350-232431248b5a",
-    "groupId": "3"
-  },
-  {
-    "name": "Sukurta su postman",
-    "surname": "Sukurta postman",
-    "age": "23",
-    "phone": "324432",
+    "phone": "654654654",
     "email": "paulasdlkjahsd@gmail.com",
-    "group": "TYPE 23",
-    "interests": ["JavaScript", "Node.js"],
-    "id": "86330e88-82fa-4fef-a36d-b84e6e16a10c",
-    "groupId": "4"
+    "programmingLanguages": "Sukurta 3",
+    "interests": [],
+    "id": "d1f0dbba-8ea6-4907-b30c-d763e04ddbd6",
+    "groupId": "1704489a-0e30-4bf6-96dd-98b8281042fc"
   }
 ]

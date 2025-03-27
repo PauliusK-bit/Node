@@ -88,10 +88,24 @@ function deleteGroup(id) {
   fs.writeFileSync(filePath, stringifiedData);
 }
 
+function assignGroupToStudent(student, groupId) {
+  const group = getGroupById(groupId);
+
+  if (group) {
+    student.group = group;
+    student.groupId = group.id;
+  } else {
+    console.log("Group not found");
+  }
+
+  return student;
+}
+
 module.exports = {
   getGroups,
   getGroupById,
   createGroup,
   updateGroup,
   deleteGroup,
+  assignGroupToStudent,
 };
