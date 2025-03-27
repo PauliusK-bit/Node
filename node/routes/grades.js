@@ -9,8 +9,8 @@ const {
 
 const router = express.Router();
 
-router.get("/grades", (req, res, next) => {
-  const grades = getGrades();
+router.get("/grades", async (req, res) => {
+  const grades = await getGrades();
 
   const data = {
     newGradeButton: {
@@ -23,7 +23,7 @@ router.get("/grades", (req, res, next) => {
   res.render("grades", data);
 });
 
-router.get("/grades/:id", (req, res, next) => {
+router.get("/grades/:id", (req, res) => {
   const { id } = req.params;
 
   const grade = getGradeById(id);
@@ -34,18 +34,18 @@ router.get("/grades/:id", (req, res, next) => {
   res.render("grade", { grade, id });
 });
 
-router.get("/create-grade", (req, res, next) => {
+router.get("/create-grade", (req, res) => {
   res.render("create-grade");
 });
 
-router.post("/grade-created", (req, res, next) => {
+router.post("/grade-created", (req, res) => {
   const { body } = req;
   const createdGrade = createGrade(body);
 
   res.redirect(`/grades/${createdGrade.id}`);
 });
 
-router.get("/edit-grade/:id", (req, res, next) => {
+router.get("/edit-grade/:id", (req, res) => {
   const { id } = req.params;
 
   const foundGrade = getGradeById(id);
@@ -66,14 +66,14 @@ router.get("/edit-grade/:id", (req, res, next) => {
         `);
 });
 
-router.post("/grade-edited", (req, res, next) => {
+router.post("/grade-edited", (req, res) => {
   const { body } = req;
   const updatedGrade = updateGrade(body);
 
   res.redirect(`/grades/${updatedGrade.id}`);
 });
 
-router.post("/delete-grade", (req, res, next) => {
+router.post("/delete-grade", (req, res) => {
   const { gradeId } = req.body;
 
   deleteGrade(gradeId);

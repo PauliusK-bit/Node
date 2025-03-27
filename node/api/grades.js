@@ -10,36 +10,49 @@ const {
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  const grades = getGrades();
-  res.send(grades);
+router.get("/", async (req, res) => {
+  try {
+    const data = await getGrades();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const grade = getGradeById(id);
-
-  res.send(grade);
+  try {
+    const data = await getGradeById(id);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res) => {
   const { body } = req;
-  const createdGrade = createGrade(body);
-
-  res.send(createdGrade);
+  try {
+    const response = await createGrade(body);
+    res.send(...response, body);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  const updatedGrade = updateGrade({ ...body, id });
-
-  res.send(updatedGrade);
+  try {
+    const response = await updateGrade({ ...body, id });
+    res.send({ response, body: { ...body, id } });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", (req, res) => {
   const { id } = req.params;
   deleteGrade(id);
   res.send({ message: "Data was successfully removed", id });

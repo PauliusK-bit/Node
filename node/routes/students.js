@@ -1,5 +1,11 @@
 const express = require("express");
-const { getStudents } = require("../services/students");
+const {
+  getStudents,
+  getStudentById,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+} = require("../services/students");
 
 const router = express.Router();
 
@@ -22,18 +28,11 @@ router.get("/students/:id", (req, res) => {
 
   const student = getStudentById(id);
 
-  if (student.groupId) {
-    const group = getGroupById(student.groupId);
-    student.group = group;
-  }
-
   res.render("student", { student, id });
 });
 
 router.get("/create-student", (req, res) => {
-  const programmingLanguages = getProgrammingLanguages();
-
-  res.render("create-student", { programmingLanguages, student: {} });
+  res.render("create-student");
 });
 
 router.post("/student-created", (req, res) => {
@@ -47,9 +46,8 @@ router.get("/edit-student/:id", (req, res) => {
   const { id } = req.params;
 
   const foundStudent = getStudentById(id);
-  const programmingLanguages = getProgrammingLanguages();
 
-  const { name, surname, age, interests, phone, email, group } = foundStudent;
+  const { name, surname, age, interests, phone, email } = foundStudent;
 
   res.send(`
         <h1>Edit Student</h1>

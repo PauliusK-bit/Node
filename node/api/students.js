@@ -1,5 +1,11 @@
 const express = require("express");
-const { getStudents } = require("../services/students");
+const {
+  getStudents,
+  getStudentById,
+  createStudent,
+  updateStudent,
+  deleteStudent,
+} = require("../services/students");
 
 const router = express.Router();
 
@@ -12,34 +18,49 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const student = getStudentById(id);
-
-  res.send(student);
+  try {
+    const data = await getStudentById(id);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.post("/", (req, res) => {
-  const { body } = req;
-  const createdStudent = createStudent(body);
-
-  res.send(createdStudent);
-});
-
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
+router.post("/", async (req, res) => {
   const { body } = req;
 
-  const updatedStudent = updateStudent({ ...body, id });
-
-  res.send(updatedStudent);
+  try {
+    const response = await createStudent(body);
+    res.send(...response, body);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.delete("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  deleteStudent(id);
-  res.send({ message: "Data was successfully removed", id });
+  const { body } = req;
+
+  try {
+    const response = await updateStudent({ ...body, id });
+    res.send({ response, body: { ...body, id } });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await deleteStudent(id);
+    res.send({ message: "Data  was succsfully removed", id, response });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
 module.exports = router;

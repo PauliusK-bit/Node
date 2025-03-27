@@ -1,87 +1,38 @@
-const { v4: uuid } = require("uuid");
-
 const path = require("path");
 const fs = require("fs");
+const { getDB } = require("../db");
+const { ObjectId } = require("mongodb");
 
-function getAssignments() {
-  const filePath = path.join("db", "assignments.json");
-  console.log(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const data = JSON.parse(fileContent);
-
-  return data;
+async function getAssignments() {
+  const db = getDB();
+  return await db.collection("assignments").find().toArray();
 }
 
-function getAssignmentById(id) {
-  const filePath = path.join("db", "assignments.json");
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const assignments = JSON.parse(fileContent);
-
-  const foundAssignment = assignments.find(
-    (assignment) => assignment.id === id
-  );
-
-  return foundAssignment;
+async function getAssignmentById(id) {
+  const db = getDB();
+  const assignment = await db
+    .collection("assignments")
+    .findOne({ _id: ObjectId.createFromHexString(id) });
+  return assignment;
 }
 
-function createAssignment(body) {
-  const id = uuid();
+async function createAssignment(body) {
+  const db = getDB();
+  const response = await db.collection("assignments").insertOne(body);
 
-  const newAssignment = {
-    ...body,
-    id,
-  };
-
-  const assignments = getAssignments();
-
-  assignments.push(newAssignment);
-
-  const stringifiedData = JSON.stringify(assignments, null, 2);
-
-  const filePath = path.join("db", "assignments.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return newAssignment;
+  return response;
 }
 
-function updateAssignment(data) {
-  const { id } = data;
+async function updateAssignment(data) {
+  const db = getDB();
+  const response = await db
+    .collection("assignments")
+    .updateOne({ _id: ObjectId.createFromHexString(data.id) }, { $set: data });
 
-  const assignments = getAssignments();
-
-  const updatedAssignments = assignments.map((assignment) => {
-    if (assignment.id === id) {
-      const updatedAssignment = {
-        ...data,
-      };
-
-      return updatedAssignment;
-    } else {
-      return assignments;
-    }
-  });
-
-  const stringifiedData = JSON.stringify(updatedAssignments, null, 2);
-
-  const filePath = path.join("db", "assignments.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return data;
+  return response;
 }
 
-function deleteAssignment(id) {
+async function deleteAssignment(id) {
   const assignments = getAssignments();
   const updatedAssignments = assignments.filter(
     (assignment) => assignment.id !== id

@@ -1,16 +1,16 @@
 const express = require("express");
 const {
   getAssignments,
-  createAssignment,
   getAssignmentById,
+  createAssignment,
   updateAssignment,
   deleteAssignment,
 } = require("../services/assignments");
 
 const router = express.Router();
 
-router.get("/assignments", (req, res, next) => {
-  const assignments = getAssignments();
+router.get("/assignments", async (req, res) => {
+  const assignments = await getAssignments();
 
   const data = {
     newAssignmentButton: {
@@ -23,7 +23,7 @@ router.get("/assignments", (req, res, next) => {
   res.render("assignments", data);
 });
 
-router.get("/assignments/:id", (req, res, next) => {
+router.get("/assignments/:id", (req, res) => {
   const { id } = req.params;
 
   const assignment = getAssignmentById(id);
@@ -31,18 +31,18 @@ router.get("/assignments/:id", (req, res, next) => {
   res.render("assignment", { assignment, id });
 });
 
-router.get("/create-assignment", (req, res, next) => {
+router.get("/create-assignment", (req, res) => {
   res.render("create-assignment");
 });
 
-router.post("/assignment-created", (req, res, next) => {
+router.post("/assignment-created", (req, res) => {
   const { body } = req;
   const createdAssignment = createAssignment(body);
 
   res.redirect(`/assignments/${createdAssignment.id}`);
 });
 
-router.get("/edit-assignment/:id", (req, res, next) => {
+router.get("/edit-assignment/:id", (req, res) => {
   const { id } = req.params;
 
   const foundAssignment = getAssignmentById(id);
@@ -74,14 +74,14 @@ router.get("/edit-assignment/:id", (req, res, next) => {
         `);
 });
 
-router.post("/assignment-edited", (req, res, next) => {
+router.post("/assignment-edited", (req, res) => {
   const { body } = req;
   const updatedAssignment = updateAssignment(body);
 
   res.redirect(`/assignments/${updatedAssignment.id}`);
 });
 
-router.post("/delete-assignment", (req, res, next) => {
+router.post("/delete-assignment", (req, res) => {
   const { assignmentId } = req.body;
 
   deleteAssignment(assignmentId);

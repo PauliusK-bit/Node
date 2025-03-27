@@ -1,91 +1,42 @@
-const { v4: uuid } = require("uuid");
+const { getDB } = require("../db");
+const { ObjectId } = require("mongodb");
 
-const path = require("path");
-const fs = require("fs");
-
-function getGrades() {
-  const filePath = path.join("db", "grades.json");
-  console.log(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const data = JSON.parse(fileContent);
-
-  return data;
+async function getGrades() {
+  const db = getDB();
+  return await db.collection("grades").find().toArray();
 }
 
-function getGradeById(id) {
-  const filePath = path.join("db", "grades.json");
+async function getGradeById(id) {
+  const db = getDB();
+  const grade = await db
+    .collection("grades")
+    .findOne({ _id: ObjectId.createFromHexString(id) });
 
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const grades = JSON.parse(fileContent);
-
-  const foundGrade = grades.find((grade) => grade.id === id);
-
-  return foundGrade;
+  return grade;
 }
 
-function createGrade(body) {
-  const id = uuid();
+async function createGrade(body) {
+  const db = getDB();
+  const response = await db.collection("grades").insertOne(body);
 
-  const newGrade = {
-    ...body,
-    id,
-  };
-
-  const grades = getGrades();
-
-  grades.push(newGrade);
-
-  const stringifiedData = JSON.stringify(grades, null, 2);
-
-  const filePath = path.join("db", "grades.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return newGrade;
+  return response;
 }
 
-function updateGrade(data) {
-  const { id } = data;
+async function updateGrade(data) {
+  const db = getDB();
+  const response = await db
+    .collection("grades")
+    .updateOne({ _id: ObjectId.createFromHexString(data.id) }, { $set: data });
 
-  const grades = getGrades();
-
-  const updatedGrade = grades.map((grade) => {
-    if (grade.id === id) {
-      const updatedGrade = {
-        ...data,
-      };
-
-      return updatedGrade;
-    } else {
-      return grade;
-    }
-  });
-
-  const stringifiedData = JSON.stringify(updatedGrade, null, 2);
-
-  const filePath = path.join("db", "grades.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return data;
+  return response;
 }
 
-function deleteGrade(id) {
-  const grades = getGrades();
-  const updatedGrades = grades.filter((grade) => grade.id !== id);
-
-  const stringifiedData = JSON.stringify(updatedGrades, null, 2);
-  const filePath = path.join("db", "grades.json");
-  fs.writeFileSync(filePath, stringifiedData);
+async function deleteGrade(id) {
+  const db = getDB();
+  const response = await db
+    .collenction("grades")
+    .deleteOne({ _id: ObjectId.createFromHexString(id) });
+  return response;
 }
 
 module.exports = {
