@@ -27,7 +27,7 @@ const gradeAPIRoutes = require("./api/grades");
 const lecturerAPIRoutes = require("./api/lecturers");
 const subjectAPIRoutes = require("./api/subjects");
 const programmingLanguageAPIRoutes = require("./api/programmingLanguages");
-const { connectToDB } = require("../db");
+const { connectToDB } = require("./db");
 
 app.use(studentRoutes);
 app.use(lecturersRoutes);
@@ -49,6 +49,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join("views"));
 
 app.use(express.static("public"));
+
+app.locals.siteTitle = "My Website";
+app.locals.currentDate = new Date().getFullYear();
 
 app.get("/", (req, res) => {
   res.render("index");

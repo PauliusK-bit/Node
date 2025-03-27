@@ -1,19 +1,10 @@
 const express = require("express");
-const {
-  getStudents,
-  getStudentById,
-  createStudent,
-  updateStudent,
-  deleteStudent,
-} = require("../services/studentsServices");
-const { getProgrammingLanguages } = require("../services/programmingLanguages");
-const { getGroupById } = require("../services/groups");
+const { getStudents } = require("../services/students");
 
 const router = express.Router();
 
-router.get("/students", (req, res) => {
-  const students = getStudents(req.query);
-
+router.get("/students", async (req, res) => {
+  const students = await getStudents();
   const data = {
     newStudentButton: {
       url: "/create-student",

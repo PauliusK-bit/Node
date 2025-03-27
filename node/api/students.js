@@ -1,22 +1,15 @@
 const express = require("express");
-const {
-  getStudents,
-  getStudentById,
-  createStudent,
-  updateStudent,
-  deleteStudent,
-} = require("../services/studentsServices");
-const { embedData } = require("../lib");
+const { getStudents } = require("../services/students");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  let students = getStudents(req.query);
-
-  if (req.query._embed === "group") {
-    students = embedData(students, "group", "groupId");
+router.get("/", async (req, res) => {
+  try {
+    const data = await getStudents();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
   }
-  res.send(students);
 });
 
 router.get("/:id", (req, res) => {

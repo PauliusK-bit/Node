@@ -6,7 +6,7 @@ const {
   updateProgrammingLanguage,
   deleteProgrammingLanguage,
 } = require("../services/programmingLanguages");
-const { getStudents } = require("../services/studentsServices");
+const { getStudents } = require("../services/students");
 
 const router = express.Router();
 
