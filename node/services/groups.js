@@ -1,104 +1,42 @@
-const { v4: uuid } = require("uuid");
+const { ObjectId } = require("mongodb");
+const { getDB } = require("../db");
 
-const path = require("path");
-const fs = require("fs");
-
-function getGroups() {
-  const filePath = path.join("db", "groups.json");
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const data = JSON.parse(fileContent);
-
-  return data;
+async function getGroups() {
+  const db = getDB();
+  return await db.collection("groups").find().toArray();
 }
 
-function getGroupById(id) {
-  const filePath = path.join("db", "groups.json");
+async function getGroupById(id) {
+  const db = getDB();
+  const group = await db
+    .collection("groups")
+    .findOne({ _id: ObjectId.createFromHexString(id) });
 
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const groups = JSON.parse(fileContent);
-
-  const foundGroup = groups.find((group) => group.id === id);
-
-  return foundGroup;
+  return group;
 }
 
-function createGroup(body) {
-  const id = uuid();
+async function createGroup(body) {
+  const db = getDB();
+  const response = await db.collection("groups").insertOne(body);
 
-  const newGroup = {
-    ...body,
-
-    id,
-  };
-
-  const groups = getGroups();
-
-  groups.push(newGroup);
-
-  const stringifiedData = JSON.stringify(groups, null, 2);
-
-  const filePath = path.join("db", "groups.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return newGroup;
+  return response;
 }
 
-function updateGroup(data) {
-  const { id } = data;
+async function updateGroup(data) {
+  const db = getDB();
+  const response = await db
+    .collection("groups")
+    .updateOne({ _id: ObjectId.createFromHexString(data.id) }, { $set: data });
 
-  const groups = getGroups();
-
-  const updatedGroup = groups.map((group) => {
-    if (group.id === id) {
-      const updatedGroup = {
-        ...data,
-      };
-
-      return updatedGroup;
-    } else {
-      return group;
-    }
-  });
-
-  const stringifiedData = JSON.stringify(updatedGroup, null, 2);
-
-  const filePath = path.join("db", "groups.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return data;
+  return response;
 }
 
-function deleteGroup(id) {
-  const groups = getGroups();
-  const updatedGroups = groups.filter((group) => group.id !== id);
-
-  const stringifiedData = JSON.stringify(updatedGroups, null, 2);
-  const filePath = path.join("db", "groups.json");
-  fs.writeFileSync(filePath, stringifiedData);
-}
-
-function assignGroupToStudent(student, groupId) {
-  const group = getGroupById(groupId);
-
-  if (group) {
-    student.group = group;
-    student.groupId = group.id;
-  } else {
-    console.log("Group not found");
-  }
-
-  return student;
+async function deleteGroup(id) {
+  const db = getDB();
+  const response = await db
+    .collenction("groups")
+    .deleteOne({ _id: ObjectId.createFromHexString(id) });
+  return response;
 }
 
 module.exports = {
@@ -107,5 +45,4 @@ module.exports = {
   createGroup,
   updateGroup,
   deleteGroup,
-  assignGroupToStudent,
 };

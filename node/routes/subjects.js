@@ -1,6 +1,4 @@
 const express = require("express");
-
-const { getLecturers } = require("./lecturers");
 const {
   getSubjects,
   getSubjectById,
@@ -11,8 +9,8 @@ const {
 
 const router = express.Router();
 
-router.get("/subjects", (req, res, next) => {
-  const subjects = getSubjects();
+router.get("/subjects", async (req, res) => {
+  const subjects = await getSubjects();
 
   const data = {
     newSubjectButton: {
@@ -25,33 +23,31 @@ router.get("/subjects", (req, res, next) => {
   res.render("subjects", data);
 });
 
-router.get("/subjects/:id", (req, res, next) => {
+router.get("/subjects/:id", (req, res) => {
   const { id } = req.params;
 
   const subject = getSubjectById(id);
 
-  const lecturer = subject.lecturer || "Nėra priskirto dėstytojo";
-
-  res.render("subject", { subject, id, lecturer });
+  res.render("subject", { subject, id });
 });
 
-router.get("/create-subject", (req, res, next) => {
+router.get("/create-subject", (req, res) => {
   res.render("create-subject");
 });
 
-router.post("/subject-created", (req, res, next) => {
+router.post("/subject-created", (req, res) => {
   const { body } = req;
   const createdSubject = createSubject(body);
 
   res.redirect(`/subjects/${createdSubject.id}`);
 });
 
-router.get("/edit-subject/:id", (req, res, next) => {
+router.get("/edit-subject/:id", (req, res) => {
   const { id } = req.params;
 
   const foundSubject = getSubjectById(id);
 
-  const { name } = foundLecturer;
+  const { name } = foundSubject;
 
   res.send(`
           <h1>Edit Subject </h1>
@@ -70,14 +66,14 @@ router.get("/edit-subject/:id", (req, res, next) => {
       `);
 });
 
-router.post("/subject-edited", (req, res, next) => {
+router.post("/subject-edited", (req, res) => {
   const { body } = req;
   const updatedSubject = updateSubject(body);
 
   res.redirect(`/subjects/${updatedSubject.id}`);
 });
 
-router.post("/delete-subject", (req, res, next) => {
+router.post("/delete-subject", (req, res) => {
   const { subjectId } = req.body;
 
   deleteSubject(subjectId);

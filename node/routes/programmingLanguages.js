@@ -6,12 +6,11 @@ const {
   updateProgrammingLanguage,
   deleteProgrammingLanguage,
 } = require("../services/programmingLanguages");
-const { getStudents } = require("../services/students");
 
 const router = express.Router();
 
-router.get("/programmingLanguages", (req, res, next) => {
-  const programmingLanguages = getProgrammingLanguages();
+router.get("/programmingLanguages", async (req, res) => {
+  const programmingLanguages = await getProgrammingLanguages();
 
   const data = {
     newProgrammingLanguageButton: {
@@ -24,37 +23,29 @@ router.get("/programmingLanguages", (req, res, next) => {
   res.render("programmingLanguages", data);
 });
 
-router.get("/programmingLanguages/:id", (req, res, next) => {
+router.get("/programmingLanguages/:id", (req, res) => {
   const { id } = req.params;
-  const students = getStudents();
 
   const programmingLanguage = getProgrammingLanguageById(id);
-
-  const studentsWhoChose = students.filter(
-    (student) =>
-      student.programmingLanguages &&
-      student.programmingLanguages.includes(programmingLanguage.name)
-  );
 
   res.render("programmingLanguage", {
     programmingLanguage,
     id,
-    students: studentsWhoChose,
   });
 });
 
-router.get("/create-programmingLanguage", (req, res, next) => {
+router.get("/create-programmingLanguage", (req, res) => {
   res.render("create-programmingLanguage");
 });
 
-router.post("/programmingLanguage-created", (req, res, next) => {
+router.post("/programmingLanguage-created", (req, res) => {
   const { body } = req;
   const createdProgrammingLanguage = createProgrammingLanguage(body);
 
   res.redirect(`/programmingLanguages/${createdProgrammingLanguage.id}`);
 });
 
-router.get("/edit-programmingLanguage/:id", (req, res, next) => {
+router.get("/edit-programmingLanguage/:id", (req, res) => {
   const { id } = req.params;
 
   const foundProgrammingLanguage = getProgrammingLanguageById(id);
@@ -78,14 +69,14 @@ router.get("/edit-programmingLanguage/:id", (req, res, next) => {
       `);
 });
 
-router.post("/programmingLanguage-edited", (req, res, next) => {
+router.post("/programmingLanguage-edited", (req, res) => {
   const { body } = req;
   const updatedProgrammingLanguage = updateProgrammingLanguage(body);
 
   res.redirect(`/programmingLanguages/${updatedProgrammingLanguage.id}`);
 });
 
-router.post("/delete-programmingLanguage", (req, res, next) => {
+router.post("/delete-programmingLanguage", (req, res) => {
   const { programmingLanguageId } = req.body;
 
   deleteProgrammingLanguage(programmingLanguageId);

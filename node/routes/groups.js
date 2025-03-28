@@ -9,8 +9,8 @@ const {
 
 const router = express.Router();
 
-router.get("/groups", (req, res, next) => {
-  const groups = getGroups();
+router.get("/groups", async (req, res) => {
+  const groups = await getGroups();
 
   const data = {
     newGroupButton: {
@@ -23,7 +23,7 @@ router.get("/groups", (req, res, next) => {
   res.render("groups", data);
 });
 
-router.get("/groups/:id", (req, res, next) => {
+router.get("/groups/:id", (req, res) => {
   const { id } = req.params;
 
   const group = getGroupById(id);
@@ -36,18 +36,18 @@ router.get("/groups/:id", (req, res, next) => {
   res.render("group", { group, id, students });
 });
 
-router.get("/create-group", (req, res, next) => {
+router.get("/create-group", (req, res) => {
   res.render("create-group");
 });
 
-router.post("/group-created", (req, res, next) => {
+router.post("/group-created", (req, res) => {
   const { body } = req;
   const createdGroup = createGroup(body);
 
   res.redirect(`/groups/${createdGroup.id}`);
 });
 
-router.get("/edit-group/:id", (req, res, next) => {
+router.get("/edit-group/:id", (req, res) => {
   const { id } = req.params;
 
   const foundGroup = getGroupById(id);
@@ -68,14 +68,14 @@ router.get("/edit-group/:id", (req, res, next) => {
       `);
 });
 
-router.post("/group-edited", (req, res, next) => {
+router.post("/group-edited", (req, res) => {
   const { body } = req;
   const updatedGroup = updateGroup(body);
 
   res.redirect(`/groups/${updatedGroup.id}`);
 });
 
-router.post("/delete-group", (req, res, next) => {
+router.post("/delete-group", (req, res) => {
   const { groupId } = req.body;
 
   deleteGroup(groupId);

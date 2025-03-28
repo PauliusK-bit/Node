@@ -1,96 +1,42 @@
-const { v4: uuid } = require("uuid");
+const { ObjectId } = require("mongodb");
+const { getDB } = require("../db");
 
-const path = require("path");
-const fs = require("fs");
-const { getSubjects } = require("./subjects");
-
-function getLecturers() {
-  const filePath = path.join("db", "lecturers.json");
-  console.log(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const data = JSON.parse(fileContent);
-
-  return data;
+async function getLecturers() {
+  const db = getDB();
+  return await db.collection("lecturers").find().toArray();
 }
 
-function getLecturerById(id) {
-  const filePath = path.join("db", "lecturers.json");
+async function getLecturerById(id) {
+  const db = getDB();
+  const lecturer = await db
+    .collection("lecturers")
+    .findOne({ _id: ObjectId.createFromHexString(id) });
 
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const lecturers = JSON.parse(fileContent);
-
-  const foundLecturer = lecturers.find((lecturer) => lecturer.id === id);
-
-  return foundLecturer;
+  return lecturer;
 }
 
-function createLecturer(body) {
-  const id = uuid();
-  const subjects = getSubjects();
+async function createLecturer(body) {
+  const db = getDB();
+  const response = await db.collection("lecturers").insertOne(body);
 
-  const assignedSubjects = subjects.sort(() => 0.5 - Math.random()).slice(0, 3);
-
-  const newLecturer = {
-    ...body,
-    subjects: assignedSubjects,
-    id,
-  };
-
-  const lecturers = getLecturers();
-
-  lecturers.push(newLecturer);
-
-  const stringifiedData = JSON.stringify(lecturers, null, 2);
-
-  const filePath = path.join("db", "lecturers.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return newLecturer;
+  return response;
 }
 
-function updateLecturer(data) {
-  const { id } = data;
+async function updateLecturer(data) {
+  const db = getDB();
+  const response = await db
+    .collection("lecturers")
+    .updateOne({ _id: ObjectId.createFromHexString(data.id) }, { $set: data });
 
-  const lecturers = getLecturers();
-
-  const updatedLecturers = lecturers.map((lecturer) => {
-    if (lecturer.id === id) {
-      const updatedLecturer = {
-        ...data,
-      };
-
-      return updatedLecturer;
-    } else {
-      return lecturer;
-    }
-  });
-
-  const stringifiedData = JSON.stringify(updatedLecturer, null, 2);
-
-  const filePath = path.join("db", "lecturers.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return data;
+  return response;
 }
 
-function deleteLecturer(id) {
-  const lecturers = getLecturers();
-  const updatedLecturers = lecturers.filter((lecturer) => lecturer.id !== id);
-
-  const stringifiedData = JSON.stringify(updatedLecturers, null, 2);
-  const filePath = path.join("db", "lecturers.json");
-  fs.writeFileSync(filePath, stringifiedData);
+async function deleteLecturer(id) {
+  const db = getDB();
+  const response = await db
+    .collenction("lecturers")
+    .deleteOne({ _id: ObjectId.createFromHexString(id) });
+  return response;
 }
 
 module.exports = {

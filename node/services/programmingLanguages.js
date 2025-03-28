@@ -1,95 +1,42 @@
-const { v4: uuid } = require("uuid");
+const { ObjectId } = require("mongodb");
+const { getDB } = require("../db");
 
-const path = require("path");
-const fs = require("fs");
-
-function getProgrammingLanguages() {
-  const filePath = path.join("db", "programmingLanguages.json");
-  console.log(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const data = JSON.parse(fileContent);
-
-  return data;
+async function getProgrammingLanguages() {
+  const db = getDB();
+  return await db.collection("programmingLanguages").find().toArray();
 }
 
-function getProgrammingLanguageById(id) {
-  const filePath = path.join("db", "programmingLanguages.json");
+async function getProgrammingLanguageById(id) {
+  const db = getDB();
+  const programmingLanguage = await db
+    .collection("students")
+    .findOne({ _id: ObjectId.createFromHexString(id) });
 
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const programmingLanguages = JSON.parse(fileContent);
-
-  const foundProgrammingLanguage = programmingLanguages.find(
-    (language) => language.id === id
-  );
-
-  return foundProgrammingLanguage;
+  return programmingLanguage;
 }
 
-function createProgrammingLanguage(body) {
-  const id = uuid();
+async function createProgrammingLanguage(body) {
+  const db = getDB();
+  const response = await db.collection("programmingLanguages").insertOne(body);
 
-  const newProgrammingLanguage = {
-    ...body,
-    id,
-  };
-
-  const programmingLanguages = getProgrammingLanguages();
-
-  programmingLanguages.push(newProgrammingLanguage);
-
-  const stringifiedData = JSON.stringify(programmingLanguages, null, 2);
-
-  const filePath = path.join("db", "programmingLanguages.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return newProgrammingLanguage;
+  return response;
 }
 
-function updateProgrammingLanguage(data) {
-  const { id } = data;
+async function updateProgrammingLanguage(data) {
+  const db = getDB();
+  const response = await db
+    .collection("programmingLanguages")
+    .updateOne({ _id: ObjectId.createFromHexString(data.id) }, { $set: data });
 
-  const programmingLanguages = getProgrammingLanguages();
-
-  const updatedProgrammingLanguages = programmingLanguages.map((language) => {
-    if (language.id === id) {
-      const updatedProgrammingLanguage = {
-        ...data,
-      };
-
-      return updatedProgrammingLanguage;
-    } else {
-      return programmingLanguages;
-    }
-  });
-
-  const stringifiedData = JSON.stringify(updatedProgrammingLanguages, null, 2);
-
-  const filePath = path.join("db", "programmingLanguages.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return data;
+  return response;
 }
 
-function deleteProgrammingLanguage(id) {
-  const programmingLanguages = getProgrammingLanguages();
-  const updatedProgrammingLanguages = programmingLanguages.filter(
-    (language) => language.id !== id
-  );
-
-  const stringifiedData = JSON.stringify(updatedProgrammingLanguages, null, 2);
-  const filePath = path.join("db", "programmingLanguages.json");
-  fs.writeFileSync(filePath, stringifiedData);
+async function deleteProgrammingLanguage(id) {
+  const db = getDB();
+  const response = await db
+    .collenction("programmingLanguages")
+    .deleteOne({ _id: ObjectId.createFromHexString(id) });
+  return response;
 }
 
 module.exports = {

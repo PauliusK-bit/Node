@@ -1,5 +1,4 @@
 const express = require("express");
-
 const {
   getGroups,
   getGroupById,
@@ -10,39 +9,56 @@ const {
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  const groups = getGroups();
-  res.send(groups);
+router.get("/", async (req, res) => {
+  try {
+    const data = await getGroups();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
-  const group = getGroupById(id);
-
-  res.send(group);
+  try {
+    const data = await getGroupById(id);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res) => {
   const { body } = req;
-  const createdGroup = createGroup(body);
-
-  res.send(createdGroup);
+  try {
+    const response = await createGroup(body);
+    res.send(...response, body);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { body } = req;
 
-  const updatedGroup = updateGroup({ ...body, id });
-
-  res.send(updatedGroup);
+  try {
+    const response = await updateGroup({ ...body, id });
+    res.send({ response, body: { ...body, id } });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  deleteGroup(id);
-  res.send({ message: "Data was successfully removed", id });
+  try {
+    const response = await deleteGroup(id);
+    res.send({ message: "Data  was succsfully removed", id, response });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
 module.exports = router;

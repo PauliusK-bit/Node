@@ -6,12 +6,11 @@ const {
   updateLecturer,
   deleteLecturer,
 } = require("../services/lecturers");
-const { getGroups } = require("../services/groups");
 
 const router = express.Router();
 
-router.get("/lecturers", (req, res, next) => {
-  const lecturers = getLecturers();
+router.get("/lecturers", async (req, res) => {
+  const lecturers = await getLecturers();
 
   const data = {
     newLecturerButton: {
@@ -24,35 +23,26 @@ router.get("/lecturers", (req, res, next) => {
   res.render("lecturers", data);
 });
 
-router.get("/lecturers/:id", (req, res, next) => {
+router.get("/lecturers/:id", (req, res) => {
   const { id } = req.params;
 
   const lecturer = getLecturerById(id);
 
-  const groups = getGroups();
-
-  const subjects = Array.isArray(lecturer.subjects) ? lecturer.subjects : [];
-
-  const group =
-    groups.length > 0
-      ? groups[Math.floor(Math.random() * groups.length)]
-      : null;
-
-  res.render("lecturer", { lecturer, id, group, subjects });
+  res.render("lecturer", { lecturer, id });
 });
 
-router.get("/create-lecturer", (req, res, next) => {
+router.get("/create-lecturer", (req, res) => {
   res.render("create-lecturer");
 });
 
-router.post("/lecturer-created", (req, res, next) => {
+router.post("/lecturer-created", (req, res) => {
   const { body } = req;
   const createdLecturer = createLecturer(body);
 
   res.redirect(`/lecturers/${createdLecturer.id}`);
 });
 
-router.get("/edit-lecturer/:id", (req, res, next) => {
+router.get("/edit-lecturer/:id", (req, res) => {
   const { id } = req.params;
 
   const foundLecturer = getLecturerById(id);
@@ -91,14 +81,14 @@ router.get("/edit-lecturer/:id", (req, res, next) => {
     `);
 });
 
-router.post("/lecturer-edited", (req, res, next) => {
+router.post("/lecturer-edited", (req, res) => {
   const { body } = req;
   const updatedLecturer = updateLecturer(body);
 
   res.redirect(`/lecturers/${updatedLecturer.id}`);
 });
 
-router.post("/delete-lecturer", (req, res, next) => {
+router.post("/delete-lecturer", (req, res) => {
   const { lecturerId } = req.body;
 
   deleteLecturer(lecturerId);

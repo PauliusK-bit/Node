@@ -1,92 +1,42 @@
-const { v4: uuid } = require("uuid");
+const { ObjectId } = require("mongodb");
+const { getDB } = require("../db");
 
-const path = require("path");
-const fs = require("fs");
-
-function getSubjects() {
-  const filePath = path.join("db", "subjects.json");
-  console.log(filePath);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const data = JSON.parse(fileContent);
-
-  return data;
+async function getSubjects() {
+  const db = getDB();
+  return await db.collection("subjects").find().toArray();
 }
 
-function getSubjectById(id) {
-  const filePath = path.join("db", "subjects.json");
+async function getSubjectById(id) {
+  const db = getDB();
+  const subject = await db
+    .collection("subjects")
+    .findOne({ _id: ObjectId.createFromHexString(id) });
 
-  if (!fs.existsSync(filePath)) {
-    throw new Error("File does not exist");
-  }
-
-  const fileContent = fs.readFileSync(filePath);
-
-  const subjects = JSON.parse(fileContent);
-
-  const foundSubject = subjects.find((subject) => subject.id === id);
-
-  return foundSubject;
+  return subject;
 }
 
-function createSubject(body) {
-  const id = uuid();
+async function createSubject(body) {
+  const db = getDB();
+  const response = await db.collection("subjects").insertOne(body);
 
-  const newSubject = {
-    ...body,
-
-    id,
-  };
-
-  const subjects = getSubjects();
-
-  subjects.push(newSubject);
-
-  const stringifiedData = JSON.stringify(subjects, null, 2);
-
-  const filePath = path.join("db", "subjects.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return newSubject;
+  return response;
 }
 
-function updateSubject(data) {
-  const { id } = data;
+async function updateSubject(data) {
+  const db = getDB();
+  const response = await db
+    .collection("subjects")
+    .updateOne({ _id: ObjectId.createFromHexString(data.id) }, { $set: data });
 
-  const subjects = getSubjects();
-
-  const updatedSubjects = subjects.map((subject) => {
-    if (subject.id === id) {
-      const updatedSubject = {
-        ...data,
-      };
-
-      return updatedSubject;
-    } else {
-      return subject;
-    }
-  });
-
-  const stringifiedData = JSON.stringify(updatedSubjects, null, 2);
-
-  const filePath = path.join("db", "subjects.json");
-  fs.writeFileSync(filePath, stringifiedData);
-
-  return data;
+  return response;
 }
 
-function deleteSubject(id) {
-  const subjects = getSubjects();
-  const updatedSubjects = subjects.filter((subject) => subject.id !== id);
-
-  const stringifiedData = JSON.stringify(updatedSubjects, null, 2);
-  const filePath = path.join("db", "subjects.json");
-  fs.writeFileSync(filePath, stringifiedData);
+async function deleteSubject(id) {
+  const db = getDB();
+  const response = await db
+    .collenction("subjects")
+    .deleteOne({ _id: ObjectId.createFromHexString(id) });
+  return response;
 }
 
 module.exports = {
