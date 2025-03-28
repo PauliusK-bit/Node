@@ -34,7 +34,7 @@ async function updateGrade(data) {
 async function deleteGrade(id) {
   const db = getDB();
   const response = await db
-    .collenction("grades")
+    .collection("grades")
     .deleteOne({ _id: ObjectId.createFromHexString(id) });
   return response;
 }

@@ -34,7 +34,7 @@ async function updateGroup(data) {
 async function deleteGroup(id) {
   const db = getDB();
   const response = await db
-    .collenction("groups")
+    .collection("groups")
     .deleteOne({ _id: ObjectId.createFromHexString(id) });
   return response;
 }

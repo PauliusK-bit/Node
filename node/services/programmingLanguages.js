@@ -34,7 +34,7 @@ async function updateProgrammingLanguage(data) {
 async function deleteProgrammingLanguage(id) {
   const db = getDB();
   const response = await db
-    .collenction("programmingLanguages")
+    .collection("programmingLanguages")
     .deleteOne({ _id: ObjectId.createFromHexString(id) });
   return response;
 }

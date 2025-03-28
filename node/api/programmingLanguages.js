@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
   const { body } = req;
   try {
     const response = await createProgrammingLanguage(body);
-    res.send(...response, body);
+    res.send({ ...response, body });
   } catch (error) {
     res.status(500).send({ error });
   }

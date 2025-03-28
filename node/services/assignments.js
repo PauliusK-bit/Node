@@ -1,5 +1,3 @@
-const path = require("path");
-const fs = require("fs");
 const { getDB } = require("../db");
 const { ObjectId } = require("mongodb");
 
@@ -33,14 +31,11 @@ async function updateAssignment(data) {
 }
 
 async function deleteAssignment(id) {
-  const assignments = getAssignments();
-  const updatedAssignments = assignments.filter(
-    (assignment) => assignment.id !== id
-  );
-
-  const stringifiedData = JSON.stringify(updatedAssignments, null, 2);
-  const filePath = path.join("db", "assignments.json");
-  fs.writeFileSync(filePath, stringifiedData);
+  const db = getDB();
+  const response = await db
+    .collection("assignments")
+    .deleteOne({ _id: ObjectId.createFromHexString(id) });
+  return response;
 }
 
 module.exports = {

@@ -34,7 +34,7 @@ async function updateStudent(data) {
 async function deleteStudent(id) {
   const db = getDB();
   const response = await db
-    .collenction("students")
+    .collection("students")
     .deleteOne({ _id: ObjectId.createFromHexString(id) });
   return response;
 }
