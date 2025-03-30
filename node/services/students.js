@@ -22,11 +22,11 @@ async function createStudent(body) {
   return response;
 }
 
-async function updateStudent(data) {
+async function updateStudent(data, id) {
   const db = getDB();
   const response = await db
     .collection("students")
-    .updateOne({ _id: ObjectId.createFromHexString(data.id) }, { $set: data });
+    .updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: data });
 
   return response;
 }
@@ -39,10 +39,21 @@ async function deleteStudent(id) {
   return response;
 }
 
+async function getStudentsBy(key, value) {
+  const db = getDB();
+  const response = await db
+    .collection("students")
+    .find({ [key]: value })
+    .toArray();
+
+  return response;
+}
+
 module.exports = {
   getStudents,
   getStudentById,
   createStudent,
   updateStudent,
   deleteStudent,
+  getStudentsBy,
 };

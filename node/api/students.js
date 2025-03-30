@@ -5,6 +5,7 @@ const {
   createStudent,
   updateStudent,
   deleteStudent,
+  getStudentsBy,
 } = require("../services/students");
 
 const router = express.Router();
@@ -45,7 +46,7 @@ router.put("/:id", async (req, res) => {
   const { body } = req;
 
   try {
-    const response = await updateStudent({ ...body, id });
+    const response = await updateStudent(body, id);
     res.send({ response, body: { ...body, id } });
   } catch (error) {
     res.status(500).send({ error });
@@ -58,6 +59,17 @@ router.delete("/:id", async (req, res) => {
   try {
     const response = await deleteStudent(id);
     res.send({ message: "Data  was succsfully removed", id, response });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.get("/:key/:value", async (req, res) => {
+  const { key, value } = req.params;
+
+  try {
+    const data = await getStudentsBy(key, value);
+    res.send(data);
   } catch (error) {
     res.status(500).send({ error });
   }
