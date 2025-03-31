@@ -39,10 +39,21 @@ async function deleteGrade(id) {
   return response;
 }
 
+async function getGradesBy(key, value) {
+  const db = getDB();
+  const response = await db
+    .collection("grades")
+    .find({ [key]: value })
+    .toArray();
+
+  return response;
+}
+
 module.exports = {
   getGrades,
   getGradeById,
   createGrade,
   updateGrade,
   deleteGrade,
+  getGradesBy,
 };

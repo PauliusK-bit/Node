@@ -6,6 +6,7 @@ const {
   createGrade,
   updateGrade,
   deleteGrade,
+  getGradesBy,
 } = require("../services/grades");
 
 const router = express.Router();
@@ -56,6 +57,17 @@ router.delete("/:id", (req, res) => {
   const { id } = req.params;
   deleteGrade(id);
   res.send({ message: "Data was successfully removed", id });
+});
+
+router.get("/:key/:value", async (req, res) => {
+  const { key, value } = req.params;
+
+  try {
+    const data = await getGradesBy(key, value);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
 module.exports = router;

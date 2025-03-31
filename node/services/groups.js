@@ -39,10 +39,21 @@ async function deleteGroup(id) {
   return response;
 }
 
+async function getGroupsBy(key, value) {
+  const db = getDB();
+  const response = await db
+    .collection("groups")
+    .find({ [key]: value })
+    .toArray();
+
+  return response;
+}
+
 module.exports = {
   getGroups,
   getGroupById,
   createGroup,
   updateGroup,
   deleteGroup,
+  getGroupsBy,
 };

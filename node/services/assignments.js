@@ -38,10 +38,21 @@ async function deleteAssignment(id) {
   return response;
 }
 
+async function getAssignmentsBy(key, value) {
+  const db = getDB();
+  const response = await db
+    .collection("assignments")
+    .find({ [key]: value })
+    .toArray();
+
+  return response;
+}
+
 module.exports = {
   getAssignments,
   getAssignmentById,
   createAssignment,
   updateAssignment,
   deleteAssignment,
+  getAssignmentsBy,
 };

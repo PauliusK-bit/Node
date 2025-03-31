@@ -5,6 +5,7 @@ const {
   createProgrammingLanguage,
   updateProgrammingLanguage,
   deleteProgrammingLanguage,
+  getProgrammingLanguagesBy,
 } = require("../services/programmingLanguages");
 
 const router = express.Router();
@@ -56,6 +57,17 @@ router.delete("/:id", async (req, res) => {
   try {
     const response = await deleteProgrammingLanguage(id);
     res.send({ message: "Data  was succsfully removed", id, response });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.get("/:key/:value", async (req, res) => {
+  const { key, value } = req.params;
+
+  try {
+    const data = await getProgrammingLanguagesBy(key, value);
+    res.send(data);
   } catch (error) {
     res.status(500).send({ error });
   }

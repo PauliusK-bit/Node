@@ -39,10 +39,21 @@ async function deleteSubject(id) {
   return response;
 }
 
+async function getSubjectsBy(key, value) {
+  const db = getDB();
+  const response = await db
+    .collection("subjects")
+    .find({ [key]: value })
+    .toArray();
+
+  return response;
+}
+
 module.exports = {
   getSubjects,
   getSubjectById,
   createSubject,
   updateSubject,
   deleteSubject,
+  getSubjectsBy,
 };

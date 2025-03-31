@@ -39,10 +39,21 @@ async function deleteProgrammingLanguage(id) {
   return response;
 }
 
+async function getProgrammingLanguagesBy(key, value) {
+  const db = getDB();
+  const response = await db
+    .collection("programmingLanguages")
+    .find({ [key]: value })
+    .toArray();
+
+  return response;
+}
+
 module.exports = {
   getProgrammingLanguages,
   getProgrammingLanguageById,
   createProgrammingLanguage,
   updateProgrammingLanguage,
   deleteProgrammingLanguage,
+  getProgrammingLanguagesBy,
 };

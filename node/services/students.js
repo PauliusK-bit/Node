@@ -3,14 +3,55 @@ const { getDB } = require("../db");
 
 async function getStudents() {
   const db = getDB();
-  return await db.collection("students").find().toArray();
+  // return await db.collection("students").find().toArray();
+
+  return await db
+    .collection("students")
+    .aggregate([
+      {
+        $lookup: {
+          from: "groups",
+          localField: "groupId",
+          foreignField: "_id",
+          as: "group",
+        },
+      },
+      {
+        $unwind: "$group",
+      },
+    ])
+    .toArray();
 }
 
 async function getStudentById(id) {
   const db = getDB();
+  // const student = await db
+  //   .collection("students")
+  //   .findOne({ _id: ObjectId.createFromHexString(id) });
+
+  // return student;
+
   const student = await db
     .collection("students")
-    .findOne({ _id: ObjectId.createFromHexString(id) });
+    .aggregate([
+      {
+        $match: {
+          _id: ObjectId.createFromHexString(id),
+        },
+      },
+      {
+        $lookup: {
+          from: "groups",
+          localField: "groupId",
+          foreignField: "_id",
+          as: "group",
+        },
+      },
+      {
+        $undwind: "$group",
+      },
+    ])
+    .next();
 
   return student;
 }

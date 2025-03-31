@@ -5,6 +5,7 @@ const {
   createLecturer,
   updateLecturer,
   deleteLecturer,
+  getLecturersBy,
 } = require("../services/lecturers");
 
 const router = express.Router();
@@ -57,6 +58,17 @@ router.delete("/:id", async (req, res) => {
   try {
     const response = await deleteLecturer(id);
     res.send({ message: "Data  was succsfully removed", id, response });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.get("/:key/:value", async (req, res) => {
+  const { key, value } = req.params;
+
+  try {
+    const data = await getLecturersBy(key, value);
+    res.send(data);
   } catch (error) {
     res.status(500).send({ error });
   }
