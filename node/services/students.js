@@ -3,7 +3,6 @@ const { getDB } = require("../db");
 
 async function getStudents() {
   const db = getDB();
-  // return await db.collection("students").find().toArray();
 
   return await db
     .collection("students")
@@ -48,7 +47,7 @@ async function getStudentById(id) {
         },
       },
       {
-        $undwind: "$group",
+        $unwind: "$group",
       },
     ])
     .next();

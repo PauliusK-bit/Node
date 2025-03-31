@@ -3,52 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Create Student</title>
   </head>
   <body>
     <form action="/student-created" method="POST">
       <h2>Create Student</h2>
-      <div className="form-control">
-        <label htmlFor="name">Name:</label>
-        <input type="text" name="name" id="name" />
+
+      <div class="form-control">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required />
       </div>
 
-      <div className="form-control">
-        <label htmlFor="surname">Surname:</label>
-        <input type="text" name="surname" id="surname" />
+      <div class="form-control">
+        <label for="surname">Surname:</label>
+        <input type="text" name="surname" id="surname" required />
       </div>
 
-      <div className="form-control">
-        <label htmlFor="age">Age:</label>
-        <input type="number" name="age" id="age" />
+      <div class="form-control">
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" required min="1" />
       </div>
 
-      <div className="form-control">
-        <label htmlFor="phone">Phone:</label>
+      <div class="form-control">
+        <label for="phone">Phone:</label>
         <input type="tel" name="phone" id="phone" />
       </div>
 
-      <div className="form-control">
-        <label htmlFor="email">Email:</label>
-        <input type="email" name="email" id="email" />
+      <div class="form-control">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required />
       </div>
-
-      <fieldset>
-        <legend>Programming Languages:</legend>
-        <% if (programmingLanguages && programmingLanguages.length > 0) { %> <%
-        programmingLanguages.forEach(lang => { %>
-        <div>
-          <input type="checkbox" id="lang-<%= lang.id %>"
-          name="programmingLanguages" value="<%= lang.name %>" <%= student &&
-          student.programmingLanguages &&
-          student.programmingLanguages.includes(lang.name) ? 'checked' : '' %>
-          />
-          <label for="lang-<%= lang.id %>"><%= lang.name %></label>
-        </div>
-        <% }) %> <% } else { %>
-        <p>No programming languages available.</p>
-        <% } %>
-      </fieldset>
 
       <button type="submit">Submit</button>
     </form>

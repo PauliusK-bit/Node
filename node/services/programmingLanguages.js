@@ -3,15 +3,53 @@ const { getDB } = require("../db");
 
 async function getProgrammingLanguages() {
   const db = getDB();
-  return await db.collection("programmingLanguages").find().toArray();
+  // return await db.collection("programmingLanguages").find().toArray();
+
+  return await db
+    .collection("programmingLanguages")
+    .aggregate([
+      {
+        $match: { students: { $exists: true, $not: { $size: 0 } } },
+      },
+      {
+        $lookup: {
+          from: "students",
+          localField: "students",
+          foreignField: "_id",
+          as: "studentData",
+        },
+      },
+    ])
+    .toArray();
 }
 
 async function getProgrammingLanguageById(id) {
   const db = getDB();
-  const programmingLanguage = await db
-    .collection("students")
-    .findOne({ _id: ObjectId.createFromHexString(id) });
+  // const programmingLanguage = await db
+  //   .collection("programmingLanguages")
+  //   .findOne({ _id: ObjectId.createFromHexString(id) });
 
+  // return programmingLanguage;
+
+  const programmingLanguage = await db
+    .collection("programmingLanguages")
+    .aggregate([
+      {
+        $match: {
+          _id: ObjectId.createFromHexString(id),
+        },
+      },
+
+      {
+        $lookup: {
+          from: "students",
+          localField: "students",
+          foreignField: "_id",
+          as: "studentData",
+        },
+      },
+    ])
+    .next();
   return programmingLanguage;
 }
 

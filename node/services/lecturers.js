@@ -3,7 +3,6 @@ const { getDB } = require("../db");
 
 async function getLecturers() {
   const db = getDB();
-  // return await db.collection("lecturers").find().toArray();
 
   return await db
     .collection("lecturers")
@@ -11,13 +10,10 @@ async function getLecturers() {
       {
         $lookup: {
           from: "subjects",
-          localField: "subjectId",
+          localField: "subjects",
           foreignField: "_id",
-          as: "subject",
+          as: "subjectsData",
         },
-      },
-      {
-        $unwind: "$subject",
       },
     ])
     .toArray();
@@ -25,9 +21,6 @@ async function getLecturers() {
 
 async function getLecturerById(id) {
   const db = getDB();
-  // const lecturer = await db
-  //   .collection("lecturers")
-  //   .findOne({ _id: ObjectId.createFromHexString(id) });
 
   const lecturer = await db
     .collection("lecturers")
@@ -40,13 +33,10 @@ async function getLecturerById(id) {
       {
         $lookup: {
           from: "subjects",
-          localField: "subjectId",
+          localField: "subjects",
           foreignField: "_id",
-          as: "subject",
+          as: "subjectData",
         },
-      },
-      {
-        $unwind: "$subject",
       },
     ])
     .next();
