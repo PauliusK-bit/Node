@@ -30,7 +30,7 @@
       <ul>
         <% students.forEach(student => { %>
         <li>
-          <a href="/students/<%= student.id %>"
+          <a href="/students/<%= student._id.toString() %>"
             ><%= student.name %> <%= student.surname %></a
           >
         </li>

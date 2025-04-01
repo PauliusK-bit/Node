@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Student Details</title>
   </head>
   <body>
     <% if (student) { %>
     <form action="/delete-student" method="POST">
       <button type="submit">Delete Student</button>
-      <input type="hidden" name="studentId" value="<%= student.id %>" />
+      <input type="hidden" name="studentId" value="<%= student._id %>" />
     </form>
 
-    <a href="/edit-student/<%= student.id %>">Edit Student</a>
+    <a href="/edit-student/<%= student._id %>">Edit Student</a>
 
     <h1><%= student.name %> <%= student.surname %></h1>
 
@@ -20,18 +20,18 @@
     <p>Age: <%= student.age %></p>
     <% } %>
 
-    <p>ID: <%= student.id %></p>
+    <p>ID: <%= student._id %></p>
 
+    <% if (student.interests && student.interests.length > 0) { %>
     <div>
-      <h2>Interest:</h2>
+      <h2>Interests:</h2>
       <ul>
         <% student.interests.forEach(interest => { %>
         <li><%= interest %></li>
         <% }) %>
       </ul>
     </div>
-
-    <% if (student.group) { %>
+    <% } %> <% if (student.group) { %>
     <div>
       <h2>Group:</h2>
       <p><%= student.group.name %></p>
@@ -42,7 +42,7 @@
     <% } else { %>
     <h1>Student not found</h1>
     <p>
-      Student with id <span style="color: red"><%= student.id %></span> was not
+      Student with ID <span style="color: red"><%= student._id %></span> was not
       found.
     </p>
     <a href="/students">Back to students</a>

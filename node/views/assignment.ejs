@@ -16,12 +16,14 @@
 
     <h1><%= assignment.name %></h1>
     <h2>Date: <%= assignment.date%></h2>
+    <p>Description: <%= assignment.description%></p>
 
     <a href="/assignments">Back to assignments</a>
     <% } else { %>
     <h1>Assigment not found</h1>
     <p>
-      Assigment with id <span style="color: red"><%= id %></span> was not found.
+      Assigment with id
+      <span style="color: red"><%= assignment._id %></span> was not found.
     </p>
     <a href="/assignments">Back to assigments</a>
     <% } %>

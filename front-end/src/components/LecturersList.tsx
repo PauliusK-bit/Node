@@ -22,8 +22,8 @@ const LecturersList = () => {
   return (
     <>
       <div className="lecturer">
-        {lecturers.map((lecturer, index) => (
-          <LecturerItem key={index} data={lecturer} />
+        {lecturers.map((lecturer) => (
+          <LecturerItem key={lecturer._id} data={lecturer} />
         ))}
       </div>
     </>

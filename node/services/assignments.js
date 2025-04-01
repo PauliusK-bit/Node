@@ -11,6 +11,7 @@ async function getAssignmentById(id) {
   const assignment = await db
     .collection("assignments")
     .findOne({ _id: ObjectId.createFromHexString(id) });
+
   return assignment;
 }
 

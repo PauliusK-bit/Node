@@ -2,7 +2,7 @@ import { LecturerProps } from "./types";
 import "./LecturerItem.css";
 
 const LecturerItem = ({ data }: LecturerProps) => {
-  const { name, surname, age, phone, email, subjects } = data;
+  const { name, surname, age, phone, email, subjectsData } = data;
 
   return (
     <>
@@ -15,9 +15,17 @@ const LecturerItem = ({ data }: LecturerProps) => {
         <p>Email: {email}</p>
         <div className="subjects">
           <h4>Subjects:</h4>
-          {subjects.map((subject, index) => (
-            <li key={index}>{subject.name}</li>
-          ))}
+          <ul>
+            {subjectsData.length > 0 ? (
+              <ul>
+                {subjectsData.map((subject) => (
+                  <li key={subject._id}>{subject.name}</li>
+                ))}
+              </ul>
+            ) : (
+              "There are no current subjects"
+            )}
+          </ul>
         </div>
       </div>
     </>

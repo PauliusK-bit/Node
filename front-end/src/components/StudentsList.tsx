@@ -42,8 +42,8 @@ const StudentsList = () => {
         </select>
       </label>
       <CardContainer>
-        {students.map((student, index) => (
-          <StudentItem key={index} data={student} />
+        {students.map((student) => (
+          <StudentItem key={student._id} data={student} />
         ))}
       </CardContainer>
     </div>

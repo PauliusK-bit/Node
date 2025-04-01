@@ -23,10 +23,10 @@ router.get("/assignments", async (req, res) => {
   res.render("assignments", data);
 });
 
-router.get("/assignments/:id", (req, res) => {
+router.get("/assignments/:id", async (req, res) => {
   const { id } = req.params;
 
-  const assignment = getAssignmentById(id);
+  const assignment = await getAssignmentById(id);
 
   res.render("assignment", { assignment, id });
 });

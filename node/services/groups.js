@@ -40,6 +40,7 @@ async function getGroupById(id) {
       },
     ])
     .next();
+
   return group;
 }
 

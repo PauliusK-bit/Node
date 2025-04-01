@@ -4,7 +4,7 @@ const { getDB } = require("../db");
 async function getStudents() {
   const db = getDB();
 
-  return await db
+  const students = await db
     .collection("students")
     .aggregate([
       {
@@ -16,10 +16,14 @@ async function getStudents() {
         },
       },
       {
-        $unwind: "$group",
+        $unwind: {
+          path: "$group",
+          preserveNullAndEmptyArrays: true,
+        },
       },
     ])
     .toArray();
+  return students;
 }
 
 async function getStudentById(id) {

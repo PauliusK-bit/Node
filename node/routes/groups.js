@@ -23,15 +23,16 @@ router.get("/groups", async (req, res) => {
   res.render("groups", data);
 });
 
-router.get("/groups/:id", (req, res) => {
+router.get("/groups/:id", async (req, res) => {
   const { id } = req.params;
 
-  const group = getGroupById(id);
+  const group = await getGroupById(id);
+
   if (!group) {
     res.render("group", { group, id });
   }
 
-  const students = Array.isArray(group.students) ? group.students : [];
+  const students = Array.isArray(group.studentData) ? group.studentData : [];
 
   res.render("group", { group, id, students });
 });
