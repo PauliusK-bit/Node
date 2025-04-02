@@ -5,7 +5,10 @@ const {
   createStudent,
   updateStudent,
   deleteStudent,
-  getStudentsBy,
+  getStudentLecturers,
+  getStudentSubjects,
+
+  // getStudentsBy,
 } = require("../services/students");
 
 const router = express.Router();
@@ -64,11 +67,33 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/:key/:value", async (req, res) => {
-  const { key, value } = req.params;
+// router.get("/:key/:value", async (req, res) => {
+//   const { key, value } = req.params;
+
+//   try {
+//     const data = await getStudentsBy(key, value);
+//     res.send(data);
+//   } catch (error) {
+//     res.status(500).send({ error });
+//   }
+// });
+
+router.get("/:student/lecturers", async (req, res) => {
+  const { student } = req.params;
 
   try {
-    const data = await getStudentsBy(key, value);
+    const data = await getStudentLecturers(student);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.get("/:student/subjects", async (req, res) => {
+  const { student } = req.params;
+
+  try {
+    const data = await getStudentSubjects(student);
     res.send(data);
   } catch (error) {
     res.status(500).send({ error });

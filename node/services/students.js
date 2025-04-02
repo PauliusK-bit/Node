@@ -77,14 +77,57 @@ async function deleteStudent(id) {
   return response;
 }
 
-async function getStudentsBy(key, value) {
+// async function getStudentsBy(key, value) {
+//   const db = getDB();
+//   const response = await db
+//     .collection("students")
+//     .find({ [key]: value })
+//     .toArray();
+
+//   return response;
+// }
+
+async function getStudentLecturers(studentId) {
   const db = getDB();
+
   const response = await db
     .collection("students")
-    .find({ [key]: value })
+    .aggregate([
+      {
+        $match: {
+          _id: ObjectId.createFromHexString(studentId),
+        },
+      },
+      {
+        $lookup: {
+          from: "lecturers",
+          localField: "lecturerId",
+          foreignField: "_id",
+          as: "lecturerData",
+        },
+      },
+      {
+        $unwind: "$lecturerData",
+      },
+    ])
     .toArray();
 
   return response;
+}
+
+async function getStudentSubjects(studentId) {
+  const db = getDB();
+
+  const student = await db
+    .collection("students")
+    .findOne({ _id: ObjectId.createFromHexString(studentId) });
+
+  const subjects = await db
+    .collection("subjects")
+    .find({ _id: { $in: student.subjects } })
+    .toArray();
+
+  return subjects;
 }
 
 module.exports = {
@@ -93,5 +136,7 @@ module.exports = {
   createStudent,
   updateStudent,
   deleteStudent,
-  getStudentsBy,
+  // getStudentsBy,
+  getStudentLecturers,
+  getStudentSubjects,
 };
