@@ -5,7 +5,9 @@ const {
   createGroup,
   updateGroup,
   deleteGroup,
-  getGroupsBy,
+  // getGroupsBy,
+  getStudentsByGroup,
+  getLecturersByGroup,
 } = require("../services/groups");
 
 const router = express.Router();
@@ -62,11 +64,33 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/:key/:value", async (req, res) => {
-  const { key, value } = req.params;
+// router.get("/:key/:value", async (req, res) => {
+//   const { key, value } = req.params;
+
+//   try {
+//     const data = await getGroupsBy(key, value);
+//     res.send(data);
+//   } catch (error) {
+//     res.status(500).send({ error });
+//   }
+// });
+
+router.get("/:group/students", async (req, res) => {
+  const { group } = req.params;
 
   try {
-    const data = await getGroupsBy(key, value);
+    const data = await getStudentsByGroup(group);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.get("/:group/lecturers", async (req, res) => {
+  const { group } = req.params;
+
+  try {
+    const data = await getLecturersByGroup(group);
     res.send(data);
   } catch (error) {
     res.status(500).send({ error });

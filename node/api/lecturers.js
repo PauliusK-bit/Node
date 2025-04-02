@@ -5,7 +5,10 @@ const {
   createLecturer,
   updateLecturer,
   deleteLecturer,
-  getLecturersBy,
+  getLecturerGroups,
+  getLecturerStudents,
+  getLecturerSubjects,
+  // getLecturersBy,
 } = require("../services/lecturers");
 
 const router = express.Router();
@@ -63,11 +66,44 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/:key/:value", async (req, res) => {
-  const { key, value } = req.params;
+// router.get("/:key/:value", async (req, res) => {
+//   const { key, value } = req.params;
+
+//   try {
+//     const data = await getLecturersBy(key, value);
+//     res.send(data);
+//   } catch (error) {
+//     res.status(500).send({ error });
+//   }
+// });
+
+router.get("/:lecturer/groups", async (req, res) => {
+  const { lecturer } = req.params;
 
   try {
-    const data = await getLecturersBy(key, value);
+    const data = await getLecturerGroups(lecturer);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.get("/:lecturer/students", async (req, res) => {
+  const { lecturer } = req.params;
+
+  try {
+    const data = await getLecturerStudents(lecturer);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
+router.get("/:lecturer/subjects", async (req, res) => {
+  const { lecturer } = req.params;
+
+  try {
+    const data = await getLecturerSubjects(lecturer);
     res.send(data);
   } catch (error) {
     res.status(500).send({ error });

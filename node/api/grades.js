@@ -6,7 +6,11 @@ const {
   createGrade,
   updateGrade,
   deleteGrade,
-  getGradesBy,
+  // getGradesBy,
+  getGradesByYear,
+  getGradesByYearAndMonth,
+  getGradesBySubject,
+  getGradesByGroup,
 } = require("../services/grades");
 
 const router = express.Router();
@@ -59,14 +63,55 @@ router.delete("/:id", (req, res) => {
   res.send({ message: "Data was successfully removed", id });
 });
 
-router.get("/:key/:value", async (req, res) => {
-  const { key, value } = req.params;
+// router.get("/:key/:value", async (req, res) => {
+//   const { key, value } = req.params;
+//   try {
+//     const data = await getGradesBy(key, value);
+//     res.send(data);
+//   } catch (error) {
+//     res.status(500).send({ error });
+//   }
+// });
+
+router.get("/date/:year", async (req, res) => {
+  const { year } = req.params;
 
   try {
-    const data = await getGradesBy(key, value);
+    const data = await getGradesByYear(parseInt(year));
     res.send(data);
   } catch (error) {
     res.status(500).send({ error });
+  }
+});
+
+router.get("/date/:year/:month", async (req, res) => {
+  const { year, month } = req.params;
+  try {
+    const data = await getGradesByYearAndMonth(parseInt(year), month);
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
+router.get("/subject/:subject", async (req, res) => {
+  const { subject } = req.params;
+
+  try {
+    const data = await getGradesBySubject(subject);
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
+router.get("/group/:group", async (req, res) => {
+  const { group } = req.params;
+  try {
+    const grades = await getGradesByGroup(group);
+    res.send(grades);
+  } catch (error) {
+    res.status(500).send({ error: "Unable to fetch grades for the group" });
   }
 });
 

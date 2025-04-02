@@ -39,11 +39,57 @@ async function deleteGrade(id) {
   return response;
 }
 
-async function getGradesBy(key, value) {
+// async function getGradesBy(key, value) {
+//   const db = getDB();
+//   const response = await db
+//     .collection("grades")
+//     .find({ [key]: value })
+//     .toArray();
+
+//   return response;
+// }
+
+async function getGradesByYear(year) {
   const db = getDB();
+
+  const response = await db.collection("grades").find({ year: year }).toArray();
+
+  return response;
+}
+
+async function getGradesByYearAndMonth(year, month) {
+  const db = getDB();
+
   const response = await db
     .collection("grades")
-    .find({ [key]: value })
+    .find({
+      year: year,
+      month: { $regex: new RegExp(`^${month}$`, "i") },
+    })
+    .toArray();
+
+  return response;
+}
+
+async function getGradesBySubject(subject) {
+  const db = getDB();
+
+  const response = await db
+    .collection("grades")
+    .find({ subject: subject })
+    .toArray();
+
+  return response;
+}
+
+async function getGradesByGroup(groupId) {
+  const db = getDB();
+
+  const groupObjectId = ObjectId(groupId);
+
+  const response = await db
+    .collection("grades")
+    .find({ groups: groupObjectId })
     .toArray();
 
   return response;
@@ -55,5 +101,9 @@ module.exports = {
   createGrade,
   updateGrade,
   deleteGrade,
-  getGradesBy,
+  // getGradesBy,
+  getGradesByYear,
+  getGradesByYearAndMonth,
+  getGradesBySubject,
+  getGradesByGroup,
 };

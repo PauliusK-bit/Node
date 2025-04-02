@@ -68,11 +68,32 @@ async function deleteGroup(id) {
   return response;
 }
 
-async function getGroupsBy(key, value) {
+// async function getGroupsBy(key, value) {
+//   const db = getDB();
+//   const response = await db
+//     .collection("groups")
+//     .find({ [key]: value })
+//     .toArray();
+
+//   return response;
+// }
+
+async function getStudentsByGroup(groupId) {
+  const db = getDB();
+
+  const response = await db
+    .collection("students")
+    .find({ groupId: ObjectId.createFromHexString(groupId) })
+    .toArray();
+
+  return response;
+}
+
+async function getLecturersByGroup(groupId) {
   const db = getDB();
   const response = await db
-    .collection("groups")
-    .find({ [key]: value })
+    .collection("lecturers")
+    .find({ groups: ObjectId.createFromHexString(groupId) })
     .toArray();
 
   return response;
@@ -84,5 +105,7 @@ module.exports = {
   createGroup,
   updateGroup,
   deleteGroup,
-  getGroupsBy,
+  // getGroupsBy,
+  getStudentsByGroup,
+  getLecturersByGroup,
 };

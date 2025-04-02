@@ -18,7 +18,6 @@ async function getStudents() {
       {
         $unwind: {
           path: "$group",
-          preserveNullAndEmptyArrays: true,
         },
       },
     ])
@@ -28,11 +27,6 @@ async function getStudents() {
 
 async function getStudentById(id) {
   const db = getDB();
-  // const student = await db
-  //   .collection("students")
-  //   .findOne({ _id: ObjectId.createFromHexString(id) });
-
-  // return student;
 
   const student = await db
     .collection("students")
