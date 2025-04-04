@@ -1,4 +1,4 @@
-const Lecturer = require("../models/groupModel");
+const Lecturer = require("../models/lecturerModel");
 
 async function createLecturer(req, res) {
   try {

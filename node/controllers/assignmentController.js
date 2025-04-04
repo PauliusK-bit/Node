@@ -1,4 +1,4 @@
-const Assignment = require("../models/groupModel");
+const Assignment = require("../models/assignmentModel");
 
 async function createAssignment(req, res) {
   try {

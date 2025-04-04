@@ -1,4 +1,4 @@
-const ProgrammingLanguage = require("../models/groupModel");
+const ProgrammingLanguage = require("../models/programmingLanguageModel");
 
 async function createProgrammingLanguage(req, res) {
   try {
