@@ -38,6 +38,22 @@
     </div>
     <% } %>
 
+    <h1>Studento Dalykų Sąrašas</h1>
+
+    <% if (student.subjects && student.subjects.length > 0) { %>
+    <ul>
+      <% student.subjects.forEach((subject) => { %>
+      <li>
+        <strong><%= subject.name %></strong>
+      </li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>Šis studentas neturi jokių dalykų.</p>
+    <% } %>
+    <h2>Debugging Subjects</h2>
+    <pre><%= JSON.stringify(student.subjects, null, 2) %></pre>
+
     <a href="/students">Back to students</a>
     <% } else { %>
     <h1>Student not found</h1>

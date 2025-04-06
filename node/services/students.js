@@ -127,6 +127,8 @@ async function getStudentSubjects(studentId) {
     .find({ _id: { $in: student.subjects } })
     .toArray();
 
+  console.log("Subjects:", subjects);
+
   return subjects;
 }
 

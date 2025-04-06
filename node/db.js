@@ -1,27 +1,18 @@
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 const process = require("process");
 
-const client = new MongoClient(process.env.DB_URI);
+mongoose
+  .connect(process.env.DB_URI)
+  .then(() => {
+    console.log("MongoDB Connected");
+  })
+  .catch((error) => {
+    console.log("Failed to connect to MongoDB:", error);
+  });
 
-let db;
-
-async function connectToDB() {
-  try {
-    await client.connect();
-    db = client.db(process.env.DB_NAME);
-    console.log("Connected to MongoDB");
-  } catch (error) {
-    console.error("Error connecting to MongoDB: ", error);
-    process.exit(1);
-  }
-}
-
-function getDB() {
-  if (!db) {
-    throw new Error("Database is not initialized");
-  }
-
-  return db;
-}
-
-module.exports = { connectToDB, getDB };
+process.on("SIGINT", () => {
+  mongoose.connection.close(() => {
+    console.log("MongoDB disconnected");
+    process.exit(0);
+  });
+});

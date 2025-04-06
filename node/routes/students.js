@@ -5,6 +5,7 @@ const {
   createStudent,
   updateStudent,
   deleteStudent,
+  getStudentSubjects,
 } = require("../services/students");
 
 const router = express.Router();
@@ -131,6 +132,18 @@ router.post("/delete-student", (req, res) => {
   deleteStudent(studentId);
 
   res.redirect("/students");
+});
+
+router.get("/students/:student/subjects", async (req, res) => {
+  const { student } = req.params;
+
+  try {
+    const subjects = await getStudentSubjects(student);
+
+    res.render("student", { subjects });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
 
 module.exports = router;
