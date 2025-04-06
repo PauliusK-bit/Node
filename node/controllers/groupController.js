@@ -63,6 +63,26 @@ async function deleteGroup(req, res) {
     res.status(500).send(error);
   }
 }
+async function getStudentsByGroup(req, res) {
+  const { group } = req.params;
+
+  try {
+    const groups = await Group.findById(group).populate("students");
+    res.send(groups.students);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+async function getLecturersByGroup(req, res) {
+  const { group } = req.params;
+
+  try {
+    const groups = await Group.findById(group).populate("lecturers");
+    res.send(groups.lecturers);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
 
 module.exports = {
   getGroups,
@@ -70,4 +90,6 @@ module.exports = {
   createGroup,
   updateGroup,
   deleteGroup,
+  getStudentsByGroup,
+  getLecturersByGroup,
 };

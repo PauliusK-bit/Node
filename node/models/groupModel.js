@@ -8,6 +8,14 @@ const groupSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    students: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Student",
+    },
+    lecturers: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Lecturer",
+    },
   },
   { timestamps: true }
 );

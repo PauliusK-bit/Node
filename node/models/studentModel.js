@@ -23,6 +23,22 @@ const studentSchema = new mongoose.Schema(
       unique: true,
     },
     interests: [String],
+    groups: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Group",
+    },
+    lecturers: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Lecturer",
+    },
+    subjects: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Subject",
+    },
+    grades: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Grade",
+    },
   },
   { timestamps: true }
 );

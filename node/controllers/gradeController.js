@@ -63,6 +63,37 @@ async function deleteGrade(req, res) {
     res.status(500).send(error);
   }
 }
+async function getGradesByYear(req, res) {
+  const { year } = req.params;
+
+  try {
+    const grades = await Grade.find({ year: year });
+    res.send(grades);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+async function getGradesByYearAndMonth(req, res) {
+  const { year, month } = req.params;
+
+  try {
+    const grades = await Grade.find({ year: year, month: month });
+    res.send(grades);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+
+async function getGradesByGroup(req, res) {
+  const { group } = req.params;
+
+  try {
+    const grades = await Grade.find({ groups: group }).select("grade");
+    res.send(grades);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
 
 module.exports = {
   getGrades,
@@ -70,4 +101,7 @@ module.exports = {
   createGrade,
   updateGrade,
   deleteGrade,
+  getGradesByYear,
+  getGradesByYearAndMonth,
+  getGradesByGroup,
 };

@@ -17,6 +17,10 @@ const gradeSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    groups: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Group",
+    },
   },
   { timestamps: true }
 );

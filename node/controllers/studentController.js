@@ -12,7 +12,10 @@ const createStudent = async (req, res) => {
 
 const getStudents = async (req, res) => {
   try {
-    const students = await Student.find();
+    const students = await Student.find().populate({
+      path: "groups",
+      select: "name",
+    });
     res.send(students);
   } catch (error) {
     res.status(500).send(error);
@@ -22,7 +25,10 @@ const getStudents = async (req, res) => {
 const getStudentById = async (req, res) => {
   try {
     const { id } = req.params;
-    const student = await Student.findById(id);
+    const student = await Student.findById(id).populate({
+      path: "groups",
+      select: "name",
+    });
 
     if (!student) {
       return res.status(404).send({ error: "User Not found" });
@@ -68,10 +74,44 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+const getStudentLecturers = async (req, res) => {
+  const { student } = req.params;
+
+  try {
+    const students = await Student.findById(student).populate("lecturers");
+    res.send(students.lecturers);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+const getStudentSubjects = async (req, res) => {
+  const { student } = req.params;
+
+  try {
+    const students = await Student.findById(student).populate("subjects");
+    res.send(students.subjects);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+const getStudentGrades = async (req, res) => {
+  const { student } = req.params;
+
+  try {
+    const students = await Student.findById(student).populate("grades");
+    res.send(students.grades);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getStudents,
   getStudentById,
   createStudent,
   updateStudent,
   deleteStudent,
+  getStudentLecturers,
+  getStudentSubjects,
+  getStudentGrades,
 };

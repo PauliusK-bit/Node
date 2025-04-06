@@ -63,6 +63,36 @@ async function deleteLecturer(req, res) {
     res.status(500).send(error);
   }
 }
+async function getLecturerGroups(req, res) {
+  const { lecturer } = req.params;
+
+  try {
+    const lecturers = await Lecturer.findById(lecturer).populate("groups");
+    res.send(lecturers.groups);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+async function getLecturerStudents(req, res) {
+  const { lecturer } = req.params;
+
+  try {
+    const lecturers = await Lecturer.findById(lecturer).populate("students");
+    res.send(lecturers.students);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+async function getLecturerSubjects(req, res) {
+  const { lecturer } = req.params;
+
+  try {
+    const lecturers = await Lecturer.findById(lecturer).populate("subjects");
+    res.send(lecturers.subjects);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
 
 module.exports = {
   getLecturers,
@@ -70,4 +100,7 @@ module.exports = {
   createLecturer,
   updateLecturer,
   deleteLecturer,
+  getLecturerGroups,
+  getLecturerStudents,
+  getLecturerSubjects,
 };
