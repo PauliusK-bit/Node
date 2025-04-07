@@ -28,7 +28,7 @@ const gradeAPIRoutes = require("./api/grades");
 const lecturerAPIRoutes = require("./api/lecturers");
 const subjectAPIRoutes = require("./api/subjects");
 const programmingLanguageAPIRoutes = require("./api/programmingLanguages");
-// const { connectToDB } = require("./db");
+const userAPIRoutes = require("./api/users");
 
 app.use(studentRoutes);
 app.use(lecturersRoutes);
@@ -45,6 +45,7 @@ app.use("/api/grades", gradeAPIRoutes);
 app.use("/api/lecturers", lecturerAPIRoutes);
 app.use("/api/subjects", subjectAPIRoutes);
 app.use("/api/programmingLanguages", programmingLanguageAPIRoutes);
+app.use("/api/users", userAPIRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));
