@@ -63,14 +63,12 @@ export interface AssignmentProps {
 export interface Group {
   name: string;
   _id: string;
-  studentsData: {
-    _id: string;
-    name: string;
-    surname: string;
-    email: string;
-  }[];
 }
 
 export interface GroupProps {
   data: Group;
+}
+
+export interface DecodedToken {
+  exp: number;
 }

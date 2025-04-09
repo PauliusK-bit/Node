@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Lecturer } from "./types";
-import axios from "axios";
-import { API_URL } from "../api/config";
+
 import LecturerItem from "./LecturerItem";
+import api from "../api";
 
 const LecturersList = () => {
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
@@ -10,7 +10,7 @@ const LecturersList = () => {
   useEffect(() => {
     const fetchLecturersData = async () => {
       try {
-        const { data } = await axios(`${API_URL}/lecturers`);
+        const { data } = await api.get("/lecturers");
         setLecturers(data);
       } catch (err) {
         console.log("Failed fetching lecturers", err);

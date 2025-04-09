@@ -17,7 +17,7 @@ const register = async (req, res) => {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 11);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
       username,
@@ -56,7 +56,8 @@ const login = async (req, res) => {
         username: user.username,
         email: user.email,
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
     );
 
     res.send({ message: "User Successfully Logged In", token });

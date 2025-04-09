@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Student } from "./types";
-import axios from "axios";
-import { API_URL } from "../api/config";
 import StudentItem from "./StudentItem";
 import styled from "styled-components";
+import api from "../api";
 
 const CardContainer = styled.div`
   display: flex;
@@ -17,7 +16,7 @@ const StudentsList = () => {
   useEffect(() => {
     const fetchStudentsData = async () => {
       try {
-        const { data } = await axios(`${API_URL}/students?_limit=${limit}`);
+        const { data } = await api.get(`/students?_limit=${limit}`);
 
         setStudents(data);
       } catch (err) {

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Subject } from "./types";
-import axios from "axios";
-import { API_URL } from "../api/config";
 import SubjectItem from "./SubjectItem";
+import api from "../api";
 
 const SubjectsList = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -10,7 +9,7 @@ const SubjectsList = () => {
   useEffect(() => {
     const fetchSubjectsData = async () => {
       try {
-        const { data } = await axios(`${API_URL}/subjects`);
+        const { data } = await api.get(`/subjects`);
         setSubjects(data);
       } catch (err) {
         console.log("Failed fetching subjects", err);

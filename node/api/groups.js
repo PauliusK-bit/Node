@@ -8,11 +8,12 @@ const {
   getStudentsByGroup,
   getLecturersByGroup,
 } = require("../controllers/groupController");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 router.get("/", getGroups);
-router.get("/:id", getGroupById);
+router.get("/:id", authMiddleware, getGroupById);
 router.post("/", createGroup);
 router.put("/:id", updateGroup);
 router.delete("/:id", deleteGroup);

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Assignment } from "./types";
-import axios from "axios";
-import { API_URL } from "../api/config";
+
 import AssignmentItem from "./AssignmentItem";
+import api from "../api";
 
 const AssignmentsList = () => {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
@@ -10,7 +10,7 @@ const AssignmentsList = () => {
   useEffect(() => {
     const fetchAssignmentsData = async () => {
       try {
-        const { data } = await axios(`${API_URL}/assignments`);
+        const { data } = await api.get("/assignments");
         setAssignments(data);
       } catch (err) {
         console.log("Failed fetching assignments", err);
