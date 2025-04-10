@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { DecodedToken } from "./types";
+import { DecodedToken, User } from "./types";
 
 interface AuthContextType {
   token: string | null;
@@ -14,6 +14,7 @@ interface AuthContextType {
   logout: () => void;
   user: DecodedToken | null;
   loading: boolean;
+  updateUser: (newUser: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -60,12 +61,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(null);
   };
 
+  const updateUser = (newUser: User) => {
+    setUser((prevState) => {
+      if (prevState) {
+        return {
+          ...prevState,
+          ...newUser,
+        };
+      }
+
+      return null;
+    });
+  };
+
   const ctxValue = {
     login,
     logout,
     loading,
     user,
     token,
+    updateUser,
   };
 
   return (

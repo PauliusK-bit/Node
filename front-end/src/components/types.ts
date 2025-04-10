@@ -69,6 +69,12 @@ export interface GroupProps {
   data: Group;
 }
 
-export interface DecodedToken {
+export interface DecodedToken extends User {
   exp: number;
+}
+
+export interface User {
+  username: string;
+  password: string;
+  email: string;
 }

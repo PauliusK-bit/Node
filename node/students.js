@@ -29,6 +29,7 @@ const lecturerAPIRoutes = require("./api/lecturers");
 const subjectAPIRoutes = require("./api/subjects");
 const programmingLanguageAPIRoutes = require("./api/programmingLanguages");
 const userAPIRoutes = require("./api/users");
+const testAPIRoutes = require("./api/twilio");
 
 app.use(studentRoutes);
 app.use(lecturersRoutes);
@@ -46,6 +47,7 @@ app.use("/api/lecturers", lecturerAPIRoutes);
 app.use("/api/subjects", subjectAPIRoutes);
 app.use("/api/programmingLanguages", programmingLanguageAPIRoutes);
 app.use("/api/users", userAPIRoutes);
+app.use("/api/twilio", testAPIRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join("views"));

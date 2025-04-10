@@ -1,11 +1,30 @@
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router";
+import { API_URL } from "../../components/config";
+import { toast, ToastContainer } from "react-toastify";
+
+const isPasswordStrong = (password: string) => {
+  const minLength = 8;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumbers = /\d/.test(password);
+  const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  return (
+    password.length >= minLength &&
+    hasUpperCase &&
+    hasLowerCase &&
+    hasNumbers &&
+    hasSpecialChars
+  );
+};
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [phone, setPhone] = useState("");
 
   const navigate = useNavigate();
 
@@ -15,16 +34,27 @@ const RegisterPage = () => {
     setEmail(event.target.value);
   const userPasswordHandler = (event: ChangeEvent<HTMLInputElement>) =>
     setPassword(event.target.value);
+  // const userPhoneHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setPhone(event.target.value);
+  // };
 
   const registerHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!isPasswordStrong(password)) {
+      toast.error(
+        "Password must be at least 8 characters long, contain upper and lower case letters, numbers, and special characters."
+      );
+      return;
+    }
+
     try {
       const userInfo = { username, email, password };
-      await axios.post(`http://localhost:3007/api/users/register`, userInfo);
+      console.log(username, email, password);
+      await axios.post(`${API_URL}/users/register`, userInfo);
       navigate("/login");
     } catch (error) {
-      console.log("Failed to register", error);
+      console.log("Failed to register user:", error);
     }
   };
 
@@ -64,9 +94,20 @@ const RegisterPage = () => {
             onChange={userPasswordHandler}
           />
         </div>
+        {/* <div className="form-control">
+          <label htmlFor="phoneNumber">Phone number:</label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            id="phoneNumber"
+            value={phone}
+            onChange={userPhoneHandler}
+          />
+        </div> */}
 
         <button type="submit">Register User</button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { useAuth } from "../../components/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { API_URL } from "../../components/config";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -19,10 +20,7 @@ const LoginPage = () => {
 
     try {
       const loginInfo = { email, password };
-      const res = await axios.post(
-        `http://localhost:3007/api/users/login`,
-        loginInfo
-      );
+      const res = await axios.post(`${API_URL}/users/login`, loginInfo);
 
       const { token } = res.data;
 
