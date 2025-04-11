@@ -1,3 +1,5 @@
+import { Role } from "../config/roles";
+
 export interface Student {
   name: string;
   surname: string;
@@ -77,4 +79,5 @@ export interface User {
   username: string;
   password: string;
   email: string;
+  role: Role;
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router";
-import { API_URL } from "../../components/config";
+import { API_URL } from "../../config/config";
 import { toast, ToastContainer } from "react-toastify";
 
 const isPasswordStrong = (password: string) => {

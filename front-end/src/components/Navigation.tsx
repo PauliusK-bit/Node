@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import LogoutButton from "./LogoutButton";
 import { useAuth } from "./AuthContext";
+import ROLES from "../config/roles";
 
 const Navigation = () => {
   const { user } = useAuth();
@@ -20,9 +21,12 @@ const Navigation = () => {
               <li>
                 <NavLink to={"/assignments"}>Assignments</NavLink>
               </li>
-              <li>
-                <NavLink to={"/groups"}>Groups</NavLink>
-              </li>
+
+              {user?.role === ROLES.ADMIN && (
+                <li>
+                  <NavLink to={"/groups"}>Groups</NavLink>
+                </li>
+              )}
               <li>
                 <NavLink to={"/lecturers"}>Lecturers</NavLink>
               </li>

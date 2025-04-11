@@ -9,10 +9,12 @@ const {
   getLecturersByGroup,
 } = require("../controllers/groupController");
 const authMiddleware = require("../middlewares/authMiddleware");
+const rolesMiddleware = require("../middlewares/rolesMiddleware");
+const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get("/", getGroups);
+router.get("/", rolesMiddleware(ROLES.ADMIN), getGroups);
 router.get("/:id", authMiddleware, getGroupById);
 router.post("/", createGroup);
 router.put("/:id", updateGroup);

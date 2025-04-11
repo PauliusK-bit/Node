@@ -46,6 +46,7 @@ const ProfilePage = () => {
       <h1>Profile Page</h1>
       <p>{user.username}</p>
       <p>{user.email}</p>
+      <p>Role: {user.role}</p>
 
       <form onSubmit={submitHandler}>
         <div className="form-control">
