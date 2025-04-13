@@ -14,7 +14,7 @@ const ROLES = require("../config/roles");
 
 const router = express.Router();
 
-router.get("/", rolesMiddleware(ROLES.ADMIN), getGroups);
+router.get("/", authMiddleware, rolesMiddleware(ROLES.ADMIN), getGroups);
 router.get("/:id", authMiddleware, getGroupById);
 router.post("/", createGroup);
 router.put("/:id", updateGroup);
